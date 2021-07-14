@@ -13,22 +13,30 @@
     <body>
         <div class="container">
             <div class="row">
-                    <div class="col-md-12">
-                        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="navi">
-                            <a class="navbar-brand" href="homepage.php"><i class="fas fa-home"></i></a>
+                     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+                            <div class="col-md-1 col-sm-1">
+                                <a class="navbar-brand" href="homepage.php"><i class="fas fa-home"></i></a>
+                            </div>
                             <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="login.php">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="registration.php">Register</a>
-                            </li>
+                             <div class="col-md-4 col-sm-4"> 
+                                <li class="nav-item">
+                                    <a class="nav-link" href="login.php">Login</a>
+                                </li>
+                            </div>  
+                            <div class="col-md-4 col-sm-4">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="registration.php">Register</a>
+                                </li>
+                            </div>
                             </ul>
-                            <form action="" class="form-inline" id="fo">
-                                <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                            </form>
+                            <div class="col-md-2 col-sm-2">
+                                <form action="" class="form-inline" id="fo">
+                                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                                </form>
+                            </div>
+                            <div class="col-md-1 col-sm-1">
                                 <a class="navbar-brand" id="cart" href="#">My Cart <i class="fas fa-shopping-cart"></i></a>
-                        </nav>
-                    </div>
+                            </div>    
+                    </nav>
             </div>
         </div>
