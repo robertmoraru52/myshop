@@ -1,21 +1,33 @@
 <?php require "header.php";?>
-<form action="action_page.php">
-    <div class="container">
-            <h1>Register</h1>
-            <p>Please fill in this form to create an account.</p>
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" id="email" name="email" required>
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" class="psw" name="psw" required>
-            <label for="psw-repeat"><b>Repeat Password</b></label>
-            <input type="password" placeholder="Repeat Password" class="psw" name="psw-repeat" required>
-            <label>
-            <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-            <div class="clearfix">
-                <button type="button" class="cancelbtn">Cancel</button>
-                <button type="submit" class="signupbtn">Register</button>
+<form action="../back_end/registration_back.php" method="post">
+    <div class="container m-5" id="center">
+        <h3 class="mb-3 fw-normal">Please Register</h3>
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 form-floating">
+                <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">Email Address</label>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 form-floating mb-4 mt-4">
+                <input type="password" name="psw" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 form-floating mb-4">
+                    <input name="psw_repeat" type="password" class="form-control" id="floatingPassword" placeholder="Repeat Password">
+                    <label for="floatingPassword">Repeat Password</label>
+                    <button class="mb-4 mt-4 w-100 btn btn-lg btn-primary" type="submit">Register</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="checkbox mb-3 col-6 col-sm-6 col-md-6 col-lg-6">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+        </div>
     </div>
 </form>
 <?php require "footer.php";?>

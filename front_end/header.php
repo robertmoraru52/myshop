@@ -21,10 +21,10 @@
                         <a class="nav-link active" aria-current="page" href="homepage.php"><i class="fas fa-home"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">Register</a>
+                            <a class="nav-link" href="login.php">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="registration.php">Login</a>
+                            <a class="nav-link" href="registration.php">Register</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
