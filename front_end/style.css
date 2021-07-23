@@ -1,11 +1,19 @@
 body{
-    background-color: rgb(161, 228, 228);
+    background-color: rgb(194, 194, 194);
 }
-#products{
+.wrapper{
     margin-top:5% ;
     margin-bottom:5%;
 }
 .form-login{
     display: block;
     margin:10%, 10%, 10%, 10%;
+}
+#mini-header{
+    display: flex;
+    justify-content: center;
+    margin: 10px 10px 10px 10px;
+}
+#hero{
+    background-color:rgb(148, 147, 147);
 }

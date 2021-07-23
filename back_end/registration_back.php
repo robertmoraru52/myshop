@@ -2,34 +2,35 @@
 
 require "connect_db.php";
 
-$email = $_POST["email"];
-$psw = $_POST["psw"];
-$psw_repeat = $_POST["psw_repeat"];
 
-$email = filter_var($email, FILTER_SANITIZE_EMAIL, FILTER_FLAG_STRIP_HIGH);
-$psw = filter_var($psw, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-$psw_repeat = filter_var($psw_repeat, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+$email = trim($_POST["email"]);
+$psw = trim($_POST["password"]);
+$psw_confirm = trim($_POST["confirm_password"]);
+$psw_p = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-if($psw != $psw_repeat){
-    echo "The two passwords do not match!";
+
+if($psw != $psw_confirm){
+        echo "The two passwords do not match!";
 }
 else{
-    try{
-        $sql = "INSERT INTO Users(email, password) VALUES(:em, :p)";
+        $sql = "SELECT id FROM Users WHERE email = :em";
+        if($stmt = $conn->prepare($sql)){
+                $stmt->bindParam(":em", $email, PDO::PARAM_STR);
+                if($stmt->execute()){
+                        if($stmt->rowCount() == 1){
+                                echo "this email is already used";
+                        }
+                         else{
+                                $sql = "INSERT INTO Users(email, password) VALUES(:em, :psw)";
 
-        $stmt = $conn->prepare($sql);
+                                $stmt = $conn->prepare($sql);
+                                $stmt->bindParam(":em", $email, PDO::PARAM_STR);
+                                $stmt->bindParam(":psw", $psw_p, PDO::PARAM_STR);
+                                $stmt->execute();
 
-        $stmt->bindParam(":em", $email);
-        $stmt->bindParam(":p", $psw);
-
-        $stmt->execute();
-        echo "Registration complete!";
-
-    }
-    catch(PDOException $e){
-        die("Error: ". $e->getMessage()) ;
-    }
+                                header("location: ../front_end/redirect_login.php");
+                        }
+                }
+        }
+       
 }
-
-unset($conn);
-
