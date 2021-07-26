@@ -39,7 +39,7 @@
                             </div>
                         </form>
                         <div class="card-footer mt-5 text-center">
-                            <a class="link-success text-decoration-none" href="#">Already have an account?</a><br>
+                            <a class="link-success text-decoration-none" href="login.php">Already have an account?</a><br>
                         </div>
                     </div>
                 </div>
