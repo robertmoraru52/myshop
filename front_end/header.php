@@ -137,7 +137,6 @@ p {
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold active" aria-current="page" href="homepage.php">HOME</a> </li>
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">SHOP</a> </li>
-                    <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">PAGES</a> </li>
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">CONTACT</a> </li>
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="registration.php">SIGN UP</a> </li>
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="login.php">SIGN IN</a> </li>
@@ -173,7 +172,7 @@ p {
                             <li><a class="dropdown-item" href="#">House Items</a></li>
                         </ul>
                     </div>
-                    <div class="d-flex align-items-center w-100 h-100 ps-lg-0 ps-sm-3"> <input class=" ps-md-0 ps-3" type="text" placeholder="what do you need?">
+                    <div class="d-flex align-items-center w-100 h-100 ps-lg-0 ps-sm-3"> <input class=" ps-md-0 ps-3" type="text" placeholder="what do you need?" style="background-color: rgb(194, 194, 194);">
                         <div class="btn btn-primary d-flex align-items-center justify-content-center"> SEARCH</div>
                     </div>
                 </div>
