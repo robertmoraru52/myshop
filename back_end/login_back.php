@@ -6,7 +6,6 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     exit;
 }
  
-
 require "connect_db.php";
 
 $sql = "SELECT id, email, password FROM Users WHERE email = :email";

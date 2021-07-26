@@ -5,10 +5,6 @@ body{
     margin-top:5% ;
     margin-bottom:5%;
 }
-.form-login{
-    display: block;
-    margin:10%, 10%, 10%, 10%;
-}
 #mini-header{
     display: flex;
     justify-content: center;
