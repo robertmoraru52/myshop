@@ -14,7 +14,6 @@ $psw = trim($_POST["psw"]);
         
 if($stmt = $conn->prepare($sql)){
     $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-        
     if($stmt->execute()){
         if($stmt->rowCount() == 1){
             if($row = $stmt->fetch()){
@@ -23,11 +22,9 @@ if($stmt = $conn->prepare($sql)){
                 $hashed_password = $row["password"];
                 if(password_verify($psw, $hashed_password)){
                     session_start();
-                    
                     $_SESSION["loggedin"] = true;
                     $_SESSION["id"] = $id;
                     $_SESSION["email"] = $email;                            
-                    
                     header("location: ../front_end/homepage.php");
                 } else{
                     echo "Invalid username or password.";
@@ -39,8 +36,6 @@ if($stmt = $conn->prepare($sql)){
     } else{
         echo "Oops! Something went wrong. Please try again later.";
     }
-
     unset($stmt);
 }
-
 unset($conn);

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,125 +10,6 @@
         <script src="https://kit.fontawesome.com/fb00eb3bce.js" crossorigin="anonymous"></script> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous"/>  
         <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="cart.css">
-        <style>
-                 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif
-}
-.navbar .navbar-nav .nav-item .active {
-    color: #67971f
-}
-a.fas {
-    position: relative;
-    font-size: 20px;
-    text-decoration: none;
-    color: black
-}
-.num {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    top: -8px;
-    left: 18px;
-    width: 15px;
-    height: 15px;
-    font-size: 8px;
-    background-color: #67971f;
-    color: white
-}
-.col-lg-3 .btn.btn-primary {
-    width: 100%;
-    height: 43px;
-    box-shadow: none;
-    outline: none;
-    background-color: #67971f;
-    color: white;
-    font-weight: 800;
-    padding: 0px 15px;
-    line-height: 22px;
-    border: none
-}
-.col-lg-3 .btn.btn-primary:focus {
-    outline: none;
-    box-shadow: none
-}
-.col-lg-3 .btn.btn-primary:hover {
-    background-color: #aadf5a
-}
-.col-lg-3 ul {
-    width: 100%
-}
-.col-lg-9 .btn.btn-secondary {
-    width: 100%;
-    height: 100% !important;
-    box-shadow: none;
-    outline: none;
-    background-color: transparent;
-    color: black;
-    font-weight: 800;
-    padding: 0px 15px;
-    line-height: 22px;
-    border: none
-}
-.col-lg-9 .btn.btn-primary {
-    background-color: #67971f;
-    border: none;
-    height: 100%;
-    width: 100px
-}
-.col-lg-9 .btn.btn-primary:hover {
-    background-color: #aadf5a
-}
-.col-lg-9 ul {
-    width: 100%
-}
-.fas.fa-phone {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #67971f
-}
-.p-green {
-    letter-spacing: 2px;
-    color: #67971f;
-    font-size: 14px
-}
-input {
-    width: 230px;
-    border: none;
-    outline: none
-}
-p {
-    margin: 0%
-}
-.text-muted {
-    font-size: 14px
-}
-.btn.btn-success {
-    color: white;
-    background-color: #67971f;
-    outline: none;
-    border: none
-}
-.btn.btn-success:hover {
-    background-color: #aadf5a
-}
-@media(max-width:1022px) {
-    input {
-        width: 100%;
-        border: none
-    }
-}
-        </style>
     </head>
     <body>
     <div class="container">
@@ -138,8 +20,16 @@ p {
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold active" aria-current="page" href="homepage.php">HOME</a> </li>
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">SHOP</a> </li>
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">CONTACT</a> </li>
-                    <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="registration.php">SIGN UP</a> </li>
-                    <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="login.php">SIGN IN</a> </li>
+                    <?php 
+                    if ($_SESSION['loggedin'] == true) { 
+                            echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">'.$_SESSION["email"] .'</a> </li>
+                            <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="../back_end/logout.php">LOGOUT</a> </li>';
+                    }
+                    else {
+                        echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="registration.php">SIGN UP</a> </li>
+                        <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="login.php">SIGN IN</a> </li>';
+                    } 
+                    ?>
                 </ul>
                 <ul class="navbar-nav icons ms-auto mb-2 mb-lg-0">
                     <li class=" nav-item pe-3"> <a href="" class="fas fa-heart"> <span class="num rounded-circle">1</span> </a> </li>
@@ -176,7 +66,7 @@ p {
                         <div class="btn btn-primary d-flex align-items-center justify-content-center"> SEARCH</div>
                     </div>
                 </div>
-                <div class="d-flex align-items-center ms-lg-auto mt-lg-0 mt-3 pe-2"> <span class=" me-2 fas fa-phone bg-light rounded-circle"></span>
+                <div class="d-flex align-items-center ms-lg-auto mt-lg-0 mt-3 pe-2"> <span class="me-2 fas fa-phone bg-light rounded-circle" id="phone"></span>
                     <div class="d-flex flex-column ps-2">
                         <p class="fw-bold">+04 0777.777.777</p>
                         <p class="text-muted">support 24/7</p>
