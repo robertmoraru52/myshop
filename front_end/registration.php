@@ -5,7 +5,7 @@
             <div class="col-xl-6 col-sm-8 col-md-8 col-lg-6">
                 <div class="card shadow">
                     <div class="card-title text-center border-bottom">
-                        <h2 class="p-3">Register</h2>
+                        <h2 class="p-3">Sing Up</h2>
                     </div>
                     <div class="card-body">
                         <form action="./myshop/back_end/registration_back.php" method="post">
@@ -29,20 +29,19 @@
                                 <button type="submit" class="btn btn-success" name="submit" id="submit">Register</button>
                             </div>
                             <?php 
-                                require "../back_end/registration_back.php";
-                                if($error == 1){
-                                    echo '<div class="alert alert-danger mt-4" id="error-psw" role="alert">
+                                $fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+                                if(strpos($fullUrl, "psw=error") == true){
+                                    echo ' <div class="alert alert-danger mt-4" role="alert">
                                     The two passwords do not match!
-                                </div>';
+                                  </div>';
                                 }
-                                else if($error == 2){
-                                    echo '<div class="alert alert-danger" id="error-psw" role="alert">
+                                else if(strpos($fullUrl, "email=error") == true){
+                                    echo ' <div class="alert alert-danger mt-4" role="alert">
                                     This email is already taken!
-                                </div>';
+                                  </div>';
                                 }
                             ?>
-                            
-                            
                             <div class="text-center text-muted justify-content-center">
                                 <p class="mt-4 text-center text-muted">You can also login with:</p>
                                 <a href="" class="me-4 text-reset"><i class="fab fa-facebook-f"></i></a>

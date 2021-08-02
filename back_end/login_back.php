@@ -27,14 +27,14 @@ if($stmt = $conn->prepare($sql)){
                     $_SESSION["email"] = $email;                            
                     header("location: ../front_end/homepage.php");
                 } else{
-                    echo "Invalid username or password.";
+                    header("location: ../front_end/login.php?error=userorpsw");
                 }
             }
         } else{
-            echo "Invalid username or password.";
+            header("location: ../front_end/login.php?error=userorpsw");
         }
     } else{
-        echo "Oops! Something went wrong. Please try again later.";
+        header("location: ../front_end/login.php?error=error");
     }
     unset($stmt);
 }

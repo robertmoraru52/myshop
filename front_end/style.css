@@ -139,3 +139,9 @@ p {
         border: none
     }
 }
+@media(max-width:768px) {
+    #search-nav{
+        border:solid 1px;
+        border-color: white;
+    }
+}

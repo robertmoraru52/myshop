@@ -1,15 +1,13 @@
 <?php
-
 require "connect_db.php";
 
 $email = trim($_POST["email"]);
 $psw = trim($_POST["password"]);
 $psw_confirm = trim($_POST["confirm_password"]);
 $psw_p = password_hash($_POST["password"], PASSWORD_DEFAULT);
-$error = 0;
 
 if($psw != $psw_confirm){
-      return  $error = 1;
+     header("location: ../front_end/registration.php?psw=error");
 }
 else{
         $sql = "SELECT id FROM Users WHERE email = :em";
@@ -17,7 +15,7 @@ else{
                 $stmt->bindParam(":em", $email, PDO::PARAM_STR);
                 if($stmt->execute()){
                         if($stmt->rowCount() == 1){
-                              return  $error = 2;
+                                header("location: ../front_end/registration.php?email=error");
                         }
                          else{
                                 $sql = "INSERT INTO Users(email, password) VALUES(:em, :psw)";
