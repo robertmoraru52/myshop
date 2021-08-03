@@ -24,7 +24,8 @@ if($stmt = $conn->prepare($sql)){
                     session_start();
                     $_SESSION["loggedin"] = true;
                     $_SESSION["id"] = $id;
-                    $_SESSION["email"] = $email;                            
+                    $_SESSION["email"] = $email;
+                    $_SESSION["password"] = $hashed_password;
                     header("location: ../front_end/homepage.php");
                 } else{
                     header("location: ../front_end/login.php?error=userorpsw");
