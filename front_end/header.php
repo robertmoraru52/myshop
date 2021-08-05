@@ -18,14 +18,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold active" aria-current="page" href="homepage.php">HOME</a> </li>
-                    <?php if($_SESSION['loggedin'] == true && $_SESSION["email"] == 'admin@example.com'){
+                    <?php if($_SESSION['loggedin'] && $_SESSION["email"] == 'admin@example.com'){
                         echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_users.php">Users</a> </li>
-                        <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_products.php">Products</a> </li>';}
+                        <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_products.php">Products</a> </li>';
+                    }
                         else{
                             echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">SHOP</a> </li>
                             <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">CONTACT</a> </li>';
                         }
-                        if ($_SESSION['loggedin'] == true ) { 
+                        if ($_SESSION['loggedin']) { 
                                 echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="account.php">'.$_SESSION["email"] .'</a> </li>
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="../back_end/logout.php">LOGOUT</a> </li>';
                         }
@@ -36,7 +37,6 @@
                     ?>
                 </ul>
                 <ul class="navbar-nav icons ms-auto mb-2 mb-lg-0">
-                    <li class=" nav-item pe-3"> <a href="" class="fas fa-heart"> <span class="num rounded-circle">1</span> </a> </li>
                     <li class=" nav-item pe-3"> <a href="cart.php" class="fas fa-shopping-bag"> <span class="num rounded-circle">3</span> </a> </li>
                     <li class=" nav-item"> <span class="">items:</span> <span class="fw-bold">150.00 Lei</span> </li>
                 </ul>

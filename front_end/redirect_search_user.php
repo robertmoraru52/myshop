@@ -30,24 +30,14 @@
         </div>
     </div>
     <div class="d-md-flex d-sm-block justify-content-md-around justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
-        <?php 
-        
-        require "../back_end/connect_db.php";
-
-        $stmt = $conn->prepare("SELECT * FROM Users ORDER BY id DESC");
-        $stmt->execute();
-        $rowList = $stmt->fetchAll();
-        $br = "<br><br><br>";
-       
-        ?>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6 mx-3"><?php foreach($rowList as $row)echo $row["id"].$br ?></h1>
+            <h1 class="h6 mx-3"><?php echo $_SESSION["search_id"]; ?></h1>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php foreach($rowList as $row)echo $row["created_at"].$br ?></h1>
+            <h1 class="h6"><?php echo $_SESSION["search_created"]; ?></h1>
         </div>
         <div class="col-md-3 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php foreach($rowList as $row)echo $row["email"].$br ?></h1>
+            <h1 class="h6"><?php echo $_SESSION["search_email"]; ?></h1>
         </div>
         <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
             <a class="btn btn-outline-dark w-100" href="change_user.php">Change</a>
