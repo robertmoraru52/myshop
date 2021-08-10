@@ -19,8 +19,16 @@
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold active" aria-current="page" href="homepage.php">HOME</a> </li>
                     <?php if($_SESSION['loggedin'] && $_SESSION["email"] == 'admin@example.com'){
-                        echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_users.php">Users</a> </li>
-                        <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_products.php">Products</a> </li>';
+                        echo '
+                        <a class="nav-link pe-3 me-4 fw-bold" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                           <span class="ps-3">Admin Functions</span> <span class="fas fa-chevron-down"></span>
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                                <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_users.php">Users</a> </li>
+                                <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_products.php">Products</a> </li>
+                                <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_categories.php">Categories</a> </li>
+                        </div>'
+                        ;
                     }
                         else{
                             echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">SHOP</a> </li>
@@ -45,8 +53,8 @@
     </nav>
     <div class="row">
         <div class="col-lg-3 mb-lg-0 mb-2">
-            <p> <a class="btn btn-primary w-100 d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="Toggle Navigation"> <span class="fas fa-bars"><span class="ps-3">All department</span></span> <span class="fas fa-chevron-down"></span> </a> </p>
-            <div class="collapse" id="collapseExample">
+            <p> <a class="btn btn-primary w-100 d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="Toggle Navigation"> <span class="fas fa-bars"><span class="ps-3">All department</span></span> <span class="fas fa-chevron-down"></span> </a> </p>
+            <div class="collapse" id="collapse2">
                 <ul class="list-unstyled">
                     <li><a class="dropdown-item" href="#">Clothes</a></li>
                     <li><a class="dropdown-item" href="#">Shoes</a></li>
