@@ -42,15 +42,6 @@
                                   </div>';
                                 }
                             ?>
-                            <div class="text-center text-muted justify-content-center">
-                                <p class="mt-4 text-center text-muted">You can also login with:</p>
-                                <a href="" class="me-4 text-reset"><i class="fab fa-facebook-f"></i></a>
-                                <a href="" class="me-4 text-reset"><i class="fab fa-twitter"></i></a>
-                                <a href="" class="me-4 text-reset"><i class="fab fa-google"></i></a>
-                                <a href="" class="me-4 text-reset"><i class="fab fa-instagram"></i></a>
-                                <a href="" class="me-4 text-reset"><i class="fab fa-linkedin"></i></a>
-                                <a href="" class="me-4 text-reset"><i class="fab fa-github"></i></a>
-                            </div>
                         </form>
                         <div class="card-footer mt-5 text-center">
                             <a class="link-success text-decoration-none" href="login.php">Already have an account?</a><br>

@@ -12,49 +12,39 @@
             </div>
         </form>
     </div class="row">
-    <div class="d-md-flex d-none justify-content-md-between justify-content-sm-center align-content-center border-bottom border-2 my-2 bg-dark text-light p-3 rounded-3">
-        <div class="col-2 text-sm-center text-md-start align-self-center">
-            <h1 class="h5 fw-bold">User ID</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Created</h1>
-        </div>
-        <div class="col-3 align-self-center">
-            <h1 class="h5 fw-bold">User Email</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Change Users</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Delete Users</h1>
-        </div>
-    </div>
-    <div class="d-md-flex d-sm-block justify-content-md-around justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
-        <?php 
-        
-        require "../back_end/connect_db.php";
+    <?php
+    require "../back_end/connect_db.php";
 
-        $stmt = $conn->prepare("SELECT * FROM Users ORDER BY id DESC");
-        $stmt->execute();
-        $rowList = $stmt->fetchAll();
-        $br = "<br><br><br>";
-       
-        ?>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6 mx-3"><?php foreach($rowList as $row)echo $row["id"].$br ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php foreach($rowList as $row)echo $row["created_at"].$br ?></h1>
-        </div>
-        <div class="col-md-3 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php foreach($rowList as $row)echo $row["email"].$br ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <a class="btn btn-outline-dark w-100" href="change_user.php">Change</a>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <div class="cv">
-                <a class="btn btn-outline-dark w-100 my-1" href="delete_user.php">Delete</a>
+    $stmt = $conn->prepare("SELECT * FROM Users");
+    $stmt->execute();
+    $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC); ?>
+    <div class='container mt-5'>
+        <div class='row-fluid'>
+            <div class='col-xs-6'>
+                <div class='table-responsive'>
+                    <table class='table table-hover table-inverse table-dark'>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Created At</th>
+                            <th>E-Mail</th>
+                            <th>Delete User</th>
+                        </tr>
+                        <?php
+                        foreach ($rowList as $key => $value) {
+                            echo "<tr>";
+                            echo "<td>" . $value["id"] . "</td>";
+                            echo "<td>" . $value["created_at"] . "</td>";
+                            echo "<td>" . $value["email"] . "</td>";
+
+                            $_SESSION["delete_user"] = $value["id"];
+                            echo "<td>
+                            <form action='../back_end/delete_user.php'>
+                            <button type='submit' class='btn btn-danger'>Delete</button>
+                            </form></td>";
+                            echo "</tr>";
+                        } ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

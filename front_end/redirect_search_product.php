@@ -8,61 +8,35 @@
                 <input type="submit" name="submit_search" value="Search" class="btn btn-outline-dark col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2">
             </div>
             <div class="col-2 col-xl-2 col-sm-2 col-md-2 col-lg-2 ">
-                <a class="btn btn-success" href="add_products.php">Add Product <i class="fas fa-plus mx-2"></i></a>
+                <a class="btn btn-success" href="add_user.php">Add User <i class="fas fa-plus mx-2"></i></a>
             </div>
         </form>
-    </div class="row">
-    <div class="d-md-flex d-none justify-content-md-between justify-content-sm-center align-content-center border-bottom border-2 my-2 bg-dark text-light p-3 rounded-3">
-        <div class="col-1 text-sm-center text-md-start align-self-center">
-            <h1 class="h5 fw-bold">Prod ID</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Name</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Stock</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Price</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Change Product</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Delete Product</h1>
-        </div>
-    </div>
-    <div class="d-md-flex d-sm-block justify-content-md-around justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
-        <?php 
-        
-        require "../back_end/connect_db.php";
-
-        $stmt = $conn->prepare("SELECT * FROM Products ORDER BY id DESC");
-        $stmt->execute();
-        $rowList = $stmt->fetchAll();
-        $br = "<br><br><br>";
-       
-        ?>
-        <div class="col-md-1 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6 mx-3"><?php echo $_SESSION["search_id_p"] ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php echo $_SESSION["search_name"] ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php echo $_SESSION["search_stock"] ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php echo $_SESSION["search_price"] ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <a class="btn btn-outline-dark w-100" href="change_product.php">Change</a>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <div class="cv">
-                <a class="btn btn-outline-dark w-100 my-1" href="delete_product.php">Delete</a>
+        <div class='container mt-5'>
+            <div class='row-fluid'>
+                <div class='col-xs-6'>
+                    <div class='table-responsive'>
+                        <table class='table table-hover table-inverse table-dark'>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Name</th>
+                                <th>Stock</th>
+                                <th>Price</th>
+                                <th>Delete Product</th>
+                            </tr>
+                            <tr>
+                                <td><?php echo $_SESSION["search_id_p"]; ?></td>
+                                <td><?php echo $_SESSION["search_name"]; ?></td>
+                                <td><?php echo $_SESSION["search_stock"]; ?></td>
+                                <td><?php echo $_SESSION["search_price"]; ?></td>
+                                <td>
+                                    <form action='../back_end/delete_product_redirect.php'>
+                                        <button type='submit' class='btn btn-danger'>Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<?php require "footer.php" ?>
+        <?php require "footer.php" ?>

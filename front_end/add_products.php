@@ -21,6 +21,10 @@
                                 <label for="price" class="form-label">Price</label>
                                 <input type="text" class="form-control" id="price" name="price" required>
                             </div>
+                            <div class="mb-4">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" rows="5" name="description" id="description"></textarea>
+                            </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-success" name="submit" id="submit">Add Product</button>
                             </div>

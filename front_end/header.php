@@ -32,7 +32,7 @@
                     }
                         else{
                             echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">SHOP</a> </li>
-                            <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">CONTACT</a> </li>';
+                            <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="contact.php">CONTACT</a> </li>';
                         }
                         if ($_SESSION['loggedin']) { 
                                 echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="account.php">'.$_SESSION["email"] .'</a> </li>
@@ -53,28 +53,28 @@
     </nav>
     <div class="row">
         <div class="col-lg-3 mb-lg-0 mb-2">
-            <p> <a class="btn btn-primary w-100 d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="Toggle Navigation"> <span class="fas fa-bars"><span class="ps-3">All department</span></span> <span class="fas fa-chevron-down"></span> </a> </p>
+            <p> <a class="btn btn-primary w-100 d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="Toggle Navigation"> <span class="fas fa-bars"><span class="ps-3">All Categories</span></span> <span class="fas fa-chevron-down"></span> </a> </p>
             <div class="collapse" id="collapse2">
-                <ul class="list-unstyled">
-                    <li><a class="dropdown-item" href="#">Clothes</a></li>
-                    <li><a class="dropdown-item" href="#">Shoes</a></li>
-                    <li><a class="dropdown-item" href="#">House Items</a></li>
-                    <li><a class="dropdown-item" href="#">Gadgets</a></li>
+                <ul class="list-unstyled ms-3">
+                    <?php
+                    require "../back_end/connect_db.php";
+
+                    $stmt = $conn->prepare("SELECT * FROM Categories");
+                    $stmt->execute();
+                    $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                    foreach($rowList as $key => $value){
+                        echo "<li><a class='dropdown-item' href='homepage.php'>" . $value["name"] . "</a></li>";
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
         <div class="col-xl-9 col-md-9 col-lg-9 col-sm-12 ">
             <div class="d-lg-flex">
-                <div class="d-lg-flex align-items-center border">
-                    <div class="dropdown w-100 my-lg-0 my-2"> <button class="btn btn-secondary d-flex justify-content-between align-items-center" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="true"> <span class=" w-100 d-flex align-items-center"> <span class=" fw-lighter pe-2">ALL</span><span class="fw-lighter pe-3"> Categories</span> <span class="fas fa-chevron-down ms-auto"></span> </span> </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                            <li><a class="dropdown-item" href="#">T-shirts</a></li>
-                            <li><a class="dropdown-item" href="#">Jeans</a></li>
-                            <li><a class="dropdown-item" href="#">Shoes</a></li>
-                            <li><a class="dropdown-item" href="#">House Items</a></li>
-                        </ul>
+                <div class="d-lg-flex align-items-center border ms-5">
+                    <div class="dropdown w-100 my-lg-0 my-2"> <button class="btn btn-secondary d-flex justify-content-between align-items-center" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="true"> <span class=" w-100 d-flex align-items-center"> 
                     </div>
-                    <div class="d-flex align-items-center w-100 h-100 ps-lg-0 ps-sm-3" id="search-nav"> <input class=" ps-md-0 ps-3" type="text" placeholder="what do you need?" style="background-color: rgb(194, 194, 194);">
+                    <div class="d-flex align-items-center w-100 h-100 ps-lg-0 ps-sm-3" id="search-nav"> <input class=" ps-md-0 ps-3" type="text" placeholder="search for a category" style="background-color: rgb(194, 194, 194);">
                         <div class="btn btn-primary d-flex align-items-center justify-content-center"> <i class="fas fa-search"></i></div>
                     </div>
                 </div>

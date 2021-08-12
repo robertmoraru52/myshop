@@ -2,8 +2,8 @@
 session_start();
 require "connect_db.php";
 
-$searchBy = $_POST["searchBy"];
-$sql = "SELECT * FROM Products WHERE id = :i";
+$searchBy = trim($_POST["searchBy"]);
+$sql = "SELECT * FROM Products WHERE name = :i";
 
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(":i", $searchBy);

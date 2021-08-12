@@ -2,7 +2,7 @@
 session_start();
 require "connect_db.php";
 
-$searchBy = $_POST["searchBy"];
+$searchBy = trim($_POST["searchBy"]);
 $sql = "SELECT * FROM Users WHERE email = :em";
 
 $stmt = $conn->prepare($sql);

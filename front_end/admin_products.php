@@ -12,55 +12,81 @@
             </div>
         </form>
     </div class="row">
-    <div class="d-md-flex d-none justify-content-md-between justify-content-sm-center align-content-center border-bottom border-2 my-2 bg-dark text-light p-3 rounded-3">
-        <div class="col-1 text-sm-center text-md-start align-self-center">
-            <h1 class="h5 fw-bold">Prod ID</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Name</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Stock</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Price</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Change Product</h1>
-        </div>
-        <div class="col-2 align-self-center">
-            <h1 class="h5 fw-bold">Delete Product</h1>
-        </div>
-    </div>
-    <div class="d-md-flex d-sm-block justify-content-md-around justify-content-sm-center text-center border-bottom border-2 my-2 bg-light p-2 rounded-3">
-        <?php 
-        
-        require "../back_end/connect_db.php";
+    <?php
+    require "../back_end/connect_db.php";
 
-        $stmt = $conn->prepare("SELECT * FROM Products ORDER BY id DESC");
-        $stmt->execute();
-        $rowList = $stmt->fetchAll();
-        $br = "<br><br><br>";
-       
-        ?>
-        <div class="col-md-1 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6 mx-3"><?php foreach($rowList as $row)echo $row["id"].$br ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php foreach($rowList as $row)echo $row["name"].$br ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php foreach($rowList as $row)echo $row["stock"].$br ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <h1 class="h6"><?php foreach($rowList as $row)echo $row["price"].$br ?></h1>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <a class="btn btn-outline-dark w-100" href="change_product.php">Change</a>
-        </div>
-        <div class="col-md-2 text-sm-center text-md-start align-self-center my-2">
-            <div class="cv">
-                <a class="btn btn-outline-dark w-100 my-1" href="delete_product.php">Delete</a>
+    $stmt = $conn->prepare("SELECT * FROM Products");
+    $stmt->execute();
+    $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC); ?>
+    <div class='container mt-5'>
+        <div class='row-fluid'>
+            <div class='col-xs-6'>
+                <div class='table-responsive'>
+                    <table class='table table-hover table-inverse table-dark'>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Name</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Delete Product</th>
+                        </tr>
+                        <?php
+                        foreach ($rowList as $key => $value) {
+                            echo "<tr>";
+                            echo "<td>" . $value["id"] . "</td>";
+                            echo "<td>" . $value["name"] . "</td>";
+                            echo "<td>" . $value["stock"] . "</td>";
+                            echo "<td>" . $value["price"] . "</td>"; ?>
+                            <td>
+                                <form method='post' action='../back_end/update_cat.php' id="update">
+                                    <div class='form-group'>
+                                        <select class='form-control-sm text-white bg-dark' id='status' name="select" form="update">
+                                            <option value="1">
+                                                <?php
+                                                $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id = :s");
+                                                $stmt->bindParam(":s", $value["id"]);
+                                                $stmt->execute();
+                                                $pivot = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                                foreach ($pivot as $key => $valP) {
+                                                    $stmt = $conn->prepare("SELECT * FROM Categories WHERE id = :q");
+                                                    $stmt->bindParam(":q", $valP["category_id"]);
+                                                    $stmt->execute();
+                                                    $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                                    foreach ($cat as $key => $val) {
+                                                        echo $val["name"];
+                                                    }
+                                                }
+                                                ?>
+                                            </option>
+                                            <?php
+                                            $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id = :s");
+                                            $stmt->bindParam(":s", $value["id"]);
+                                            $stmt->execute();
+                                            $pivot = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                            foreach ($pivot as $key => $valP) {
+                                                $stmt = $conn->prepare("SELECT * FROM Categories WHERE id != :q");
+                                                $stmt->bindParam(":q", $valP["category_id"]);
+                                                $stmt->execute();
+                                                $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                                foreach ($cat as $key => $val) {
+                                                    echo "<option value='0'>" . $val["name"] . "</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </form>
+                            </td>
+                        <?php $_SESSION["delete_prod"] = $value["id"];
+                            echo "<td>
+                    <form action='../back_end/delete_prod.php'>
+                    <button type='submit' class='btn btn-danger'>Delete</button>
+                    </form></td>";
+                            echo "</tr>";
+                        } ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
