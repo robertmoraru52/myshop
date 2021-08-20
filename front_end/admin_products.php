@@ -17,7 +17,7 @@
 
     $stmt = $conn->prepare("SELECT * FROM Products");
     $stmt->execute();
-    $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC); ?>
+    $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC);?>
     <div class='container mt-5'>
         <div class='row-fluid'>
             <div class='col-xs-6'>
@@ -37,52 +37,33 @@
                             echo "<td>" . $value["id"] . "</td>";
                             echo "<td>" . $value["name"] . "</td>";
                             echo "<td>" . $value["stock"] . "</td>";
-                            echo "<td>" . $value["price"] . "</td>"; ?>
+                            echo "<td>" . $value["price"] . "</td>"; 
+                        ?>
                             <td>
-                                <form method='post' action='../back_end/update_cat.php' id="update">
-                                    <div class='form-group'>
-                                        <select class='form-control-sm text-white bg-dark' id='status' name="select" form="update">
-                                            <option value="1">
-                                                <?php
-                                                $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id = :s");
-                                                $stmt->bindParam(":s", $value["id"]);
-                                                $stmt->execute();
-                                                $pivot = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                                                foreach ($pivot as $key => $valP) {
-                                                    $stmt = $conn->prepare("SELECT * FROM Categories WHERE id = :q");
-                                                    $stmt->bindParam(":q", $valP["category_id"]);
-                                                    $stmt->execute();
-                                                    $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                                                    foreach ($cat as $key => $val) {
-                                                        echo $val["name"];
-                                                    }
-                                                }
-                                                ?>
-                                            </option>
-                                            <?php
-                                            $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id = :s");
-                                            $stmt->bindParam(":s", $value["id"]);
+                                <div class='form-group'>
+                                    <select multiple class='form-control-sm text-white bg-dark' id="select-cat" onchange="getComboA(this)">
+                                        <?php
+                                            $stmt = $conn->prepare("SELECT * FROM Categories");
                                             $stmt->execute();
-                                            $pivot = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                                            foreach ($pivot as $key => $valP) {
-                                                $stmt = $conn->prepare("SELECT * FROM Categories WHERE id != :q");
-                                                $stmt->bindParam(":q", $valP["category_id"]);
-                                                $stmt->execute();
-                                                $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                                                foreach ($cat as $key => $val) {
-                                                    echo "<option value='0'>" . $val["name"] . "</option>";
-                                                }
+                                            $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                            foreach($cat as $key => $category){
+                                                echo "<option >" . $category["name"] . "</option>";
                                             }
-                                            ?>
-                                        </select>
-                                    </div>
-                                </form>
+                                            echo "<option >" . $value["id"] . "</option>";
+                                            $stmt = $conn->prepare("UPDATE Products_Categories SET category_id = :cat_name WHERE product_id = :prod_id");
+                                            $stmt->bindParam(":cat_name", $_SESSION["category_id"]);
+                                            $stmt->bindParam(":prod_id", $value["id"]);
+                                            $stmt->execute();
+                                        ?>
+                                    </select>
+                                </div>
                             </td>
-                        <?php $_SESSION["delete_prod"] = $value["id"];
+                        <?php 
+                        $_SESSION["delete_prod"] = $value["id"];
                             echo "<td>
-                    <form action='../back_end/delete_prod.php'>
-                    <button type='submit' class='btn btn-danger'>Delete</button>
-                    </form></td>";
+                            <form action='../back_end/delete_prod.php'>
+                            <button type='submit' class='btn btn-danger'>Delete</button>
+                            </form></td>";
                             echo "</tr>";
                         } ?>
                     </table>
@@ -91,4 +72,5 @@
         </div>
     </div>
 </div>
+<div id="salam"></div>
 <?php require "footer.php" ?>

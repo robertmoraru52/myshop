@@ -1,5 +1,4 @@
 <?php require "header.php"; ?>
-
 <form method="post" action="../back_end/recover_pass_back.php">
     <div class="container">
         <div class="row justify-content-center m-5">
@@ -19,9 +18,14 @@
                         <?php
                         $fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-                        if (strpos($fullUrl, "pass=success") == true) {
+                        if (strpos($fullUrl, "error=success") == true) {
                             echo ' <div class="alert alert-success mt-4" role="alert">
                                     You will recieve an email with the next steps!
+                                  </div>';
+                            }
+                            elseif(strpos($fullUrl, "error=fail") == true){
+                                echo ' <div class="alert alert-danger mt-4" role="alert">
+                                    There was an error! Please try again!
                                   </div>';
                             }
                         ?>
@@ -31,5 +35,4 @@
         </div>
     </div>
 </form>
-
 <?php require "footer.php"; ?>

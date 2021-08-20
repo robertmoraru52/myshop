@@ -40,6 +40,11 @@
                                     There was an error! Please try again!
                                   </div>';
                         }
+                        else if (strpos($fullUrl, "reset=succes") == true) {
+                            echo ' <div class="alert alert-succes mt-4" role="alert">
+                                    Password Reset Succesfull!Login with your new password!
+                                  </div>';
+                        }
                         ?>
                         <div class="card-footer mt-5 text-center">
                             <a class="link-success text-decoration-none" href="recover_pass.php">Forgot the password?</a><br>
