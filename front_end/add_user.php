@@ -1,5 +1,4 @@
 <?php require "header.php";?>
-<form action="../back_end/registration_back.php" method="post">
     <div class="container">
         <div class="row justify-content-center m-5">
             <div class="col-xl-6 col-sm-8 col-md-8 col-lg-6">
@@ -8,7 +7,7 @@
                         <h2 class="p-3">Add New User</h2>
                     </div>
                     <div class="card-body">
-                        <form action="./myshop/back_end/registration_back.php" method="post">
+                        <form action="../back_end/add_user_back.php" method="post">
                             <div class="mb-4">
                                 <label for="email" class="form-label">Email Adress</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
@@ -44,5 +43,4 @@
             </div>
         </div>
     </div>
-</form>
 <?php require "footer.php";?>

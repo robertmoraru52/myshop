@@ -15,6 +15,21 @@
     <?php
     require "../back_end/connect_db.php";
 
+    if(isset($_GET["action"]) && $_GET["action"] == "delete"){
+            $stmt = $conn->prepare("DELETE FROM Products_Categories WHERE product_id = :g");
+            $stmt->bindParam(":g", $_GET["id"]);
+           if($stmt->execute()) {
+                $stmt = $conn->prepare("DELETE FROM Products WHERE id = :g");
+                $stmt->bindParam(":g", $_GET["id"]);
+                $stmt->execute();
+                echo ' <div class="alert alert-danger text-center mt-4" role="alert">
+                                Item removed !
+                        </div>';
+                header("location: admin_product.php");
+                }
+        }
+    
+
     $stmt = $conn->prepare("SELECT * FROM Products");
     $stmt->execute();
     $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC);?>
@@ -41,36 +56,56 @@
                         ?>
                             <td>
                                 <div class='form-group'>
-                                    <select multiple class='form-control-sm text-white bg-dark' id="select-cat" onchange="getComboA(this)">
+                                    <select multiple class='form-control-sm text-white bg-dark' id="select-cat" onChange="window.location.href=this.value;getComboA(this)" >
                                         <?php
                                             $stmt = $conn->prepare("SELECT * FROM Categories");
                                             $stmt->execute();
                                             $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                                             foreach($cat as $key => $category){
-                                                echo "<option >" . $category["name"] . "</option>";
+                                                echo "<option value='admin_products.php?prod_id=".$value["id"]."'>" . $category["name"] . "</option>";
+                                                
                                             }
-                                            echo "<option >" . $value["id"] . "</option>";
+                                            $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id=:p");
+                                            $stmt->bindParam(":p", $_GET["prod_id"]);
+                                            $stmt->execute();
+                                            if($stmt->rowCount()==0){
+                                                $stmt = $conn->prepare("INSERT INTO Products_Categories (category_id,product_id) VALUES (:cat_name, :prod_id)");
+                                            $stmt->bindParam(":cat_name", $_SESSION["category_id"]);
+                                            $stmt->bindParam(":prod_id", $_GET["prod_id"]);
+                                            $stmt->execute();
+
+                                            }else{
                                             $stmt = $conn->prepare("UPDATE Products_Categories SET category_id = :cat_name WHERE product_id = :prod_id");
                                             $stmt->bindParam(":cat_name", $_SESSION["category_id"]);
-                                            $stmt->bindParam(":prod_id", $value["id"]);
+                                            $stmt->bindParam(":prod_id", $_GET["prod_id"]);
                                             $stmt->execute();
+                                        }
+
                                         ?>
                                     </select>
                                 </div>
                             </td>
-                        <?php 
-                        $_SESSION["delete_prod"] = $value["id"];
-                            echo "<td>
-                            <form action='../back_end/delete_prod.php'>
-                            <button type='submit' class='btn btn-danger'>Delete</button>
-                            </form></td>";
-                            echo "</tr>";
-                        } ?>
+                            <td>
+                            <span class="text-white"><a class="text-reset text-decoration-none btn btn-danger" href="admin_products.php?action=delete&id=<?php echo $value["id"]; ?>">DELETE  <i class="fa fa-times"></i></a></span>
+                            </td>
+                            </tr>
+                            <?php 
+                        } 
+                       
+
+                        ?>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="salam"></div>
+<script>
+    window.onload = function() {
+    if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
+    }
+}
+</script>
 <?php require "footer.php" ?>

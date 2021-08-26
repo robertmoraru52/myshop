@@ -31,7 +31,7 @@
                         ;
                     }
                         else{
-                            echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="#">SHOP</a> </li>
+                            echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="shop.php">SHOP</a> </li>
                             <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="contact.php">CONTACT</a> </li>';
                         }
                         if ($_SESSION['loggedin']) { 
@@ -45,8 +45,8 @@
                     ?>
                 </ul>
                 <ul class="navbar-nav icons ms-auto mb-2 mb-lg-0">
-                    <li class=" nav-item pe-3"> <a href="cart.php" class="fas fa-shopping-bag"> <span class="num rounded-circle">3</span> </a> </li>
-                    <li class=" nav-item"> <span class="">items:</span> <span class="fw-bold">150.00 Lei</span> </li>
+                    <li class=" nav-item pe-3"> <a href="cart.php" class="fas fa-shopping-bag"> <span class="num rounded-circle"><?php echo $_SESSION["items_total"]; ?></span> </a> </li>
+                    <li class=" nav-item"> <span class="">items:</span> <span class="fw-bold"><?php echo $_SESSION["cart_total"]; ?></span> </li>
                 </ul>
             </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="col-lg-3 mb-lg-0 mb-2">
             <p> <a class="btn btn-primary w-100 d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="Toggle Navigation"> <span class="fas fa-bars"><span class="ps-3">All Categories</span></span> <span class="fas fa-chevron-down"></span> </a> </p>
             <div class="collapse" id="collapse2">
-                <ul class="list-unstyled ms-3">
+                <ul class="list-unstyled ms-3" id="cat_nav" onclick="refreshPage()" >
                     <?php
                     require "../back_end/connect_db.php";
 
@@ -63,7 +63,7 @@
                     $stmt->execute();
                     $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                     foreach($rowList as $key => $value){
-                        echo "<li><a class='dropdown-item' href='homepage.php'>" . $value["name"] . "</a></li>";
+                        echo '<li ><a class="dropdown-item" href="category_page.php"  >' . $value["name"] . "</a></li>";
                     }
                     ?>
                 </ul>
@@ -74,10 +74,12 @@
                 <div class="d-lg-flex align-items-center border ms-5">
                     <div class="dropdown w-100 my-lg-0 my-2"> <button class="btn btn-secondary d-flex justify-content-between align-items-center" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="true"> <span class=" w-100 d-flex align-items-center"> 
                     </div>
-                    <div class="d-flex align-items-center w-100 h-100 ps-lg-0 ps-sm-3" id="search-nav"> <input class=" ps-md-0 ps-3" type="text" placeholder="search for a category" style="background-color: rgb(194, 194, 194);">
-                        <div class="btn btn-primary d-flex align-items-center justify-content-center"> <i class="fas fa-search"></i></div>
-                    </div>
+                    <form action="../back_end/search_category_nav.php" method="POST" class="d-flex align-items-center w-100 h-100 ps-lg-0 ps-sm-3">
+                        <input name="search_cat" id="search_cat_navbar" class=" ps-md-0 ps-3" type="text" placeholder="search for a category" style="background-color: rgb(194, 194, 194);">
+                        <button class="btn btn-primary d-flex align-items-center justify-content-center" type="submit" name="submit_search"><i class="fas fa-search"></i></button>
+                    </form>
                 </div>
+
                 <div class="d-flex align-items-center ms-lg-auto mt-lg-0 mt-3 pe-2"> <span class="me-2 fas fa-phone bg-light rounded-circle" id="phone"></span>
                     <div class="d-flex flex-column ps-2">
                         <p class="fw-bold">+04 0777.777.777</p>
@@ -88,3 +90,10 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="offset-md-3 col-md-5 text-center">
+        <div id="s_paragraph" ></div>
+    </div>
+</div>
+
+<div id="cat-header"></div>

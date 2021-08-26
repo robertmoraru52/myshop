@@ -1,6 +1,11 @@
 <?php
 session_start();
-require "header.php"
+require "header.php";
+require "../back_end/connect_db.php";
+$stmt = $conn->prepare("SELECT * FROM Users WHERE email = :em");
+$stmt->bindParam("em",$_SESSION["email"]);
+$stmt->execute();
+$row = $stmt->fetch(\PDO::FETCH_ASSOC);
 ?>
 <div class="container rounded bg-white mt-5 mb-5">
     <div class="row">
@@ -19,35 +24,35 @@ require "header.php"
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <label class="labels">First Name</label>
-                            <input type="text" class="form-control" placeholder="first name" id="f_name" name="f_name">
+                            <input type="text" class="form-control" placeholder="<?php echo $row["first_name"] ?>" id="f_name" name="f_name">
                         </div>
                         <div class="col-md-6">
                             <label class="labels">Last Name</label>
-                            <input type="text" class="form-control" name="l_name" id="l_name" placeholder="last name">
+                            <input type="text" class="form-control" name="l_name" id="l_name" placeholder="<?php echo $row["last_name"] ?>">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class="labels">Mobile Number</label>
-                            <input type="text" class="form-control" placeholder="enter phone number" id="mobile" name="mobile">
+                            <input type="text" class="form-control" placeholder="<?php echo $row["mobile"] ?>" id="mobile" name="mobile">
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Address</label>
-                            <input type="text" class="form-control" placeholder="enter address line 1" id="address" name="address">
+                            <input type="text" class="form-control" placeholder="<?php echo $row["adress"] ?>" id="address" name="address">
                         </div>
                         <div class="col-md-12">
                             <label class="labels">Postcode</label>
-                            <input type="text" class="form-control" placeholder="enter post code" id="post_code" name="post_code">
+                            <input type="text" class="form-control" placeholder="<?php echo $row["post_code"] ?>" id="post_code" name="post_code">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <label class="labels">Country</label>
-                            <input type="text" class="form-control" placeholder="country" id="country" name="country">
+                            <input type="text" class="form-control" placeholder="<?php echo $row["country"] ?>" id="country" name="country">
                         </div>
                         <div class="col-md-6">
                             <label class="labels">State/Region</label>
-                            <input type="text" class="form-control" name="region" id="region" placeholder="state">
+                            <input type="text" class="form-control" name="region" id="region" placeholder="<?php echo $row["region"] ?>">
                         </div>
                     </div>
                     <div class="mt-5 text-center">

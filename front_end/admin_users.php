@@ -15,6 +15,18 @@
     <?php
     require "../back_end/connect_db.php";
 
+
+    if(isset($_GET["action"]) && $_GET["action"] == "delete"){
+            $stmt = $conn->prepare("DELETE FROM Users WHERE id = :g");
+            $stmt->bindParam(":g", $_GET["id"]);
+            $stmt->execute();
+            echo ' <div class="alert alert-danger text-center mt-4" role="alert">
+                            User removed !
+                    </div>';
+        }
+    
+
+
     $stmt = $conn->prepare("SELECT * FROM Users");
     $stmt->execute();
     $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC); ?>
@@ -36,13 +48,11 @@
                             echo "<td>" . $value["created_at"] . "</td>";
                             echo "<td>" . $value["email"] . "</td>";
 
-                            $_SESSION["delete_user"] = $value["id"];
-                            echo "<td>
-                            <form action='../back_end/delete_user.php'>
-                            <button type='submit' class='btn btn-danger'>Delete</button>
-                            </form></td>";
-                            echo "</tr>";
-                        } ?>
+                        ?>
+                        <td>
+                             <span class="text-white"><a class="text-reset text-decoration-none btn btn-danger" href="admin_users.php?action=delete&id=<?php echo $value["id"]; ?>">DELETE  <i class="fa fa-times"></i></a></span>
+                        </td>
+                        <?php } ?>
                     </table>
                 </div>
             </div>

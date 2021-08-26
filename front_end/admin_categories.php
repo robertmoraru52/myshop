@@ -9,12 +9,24 @@
             <div class="col-2 col-xl-2 col-sm-2 col-md-2 col-lg-2 ">
                 <a class="btn btn-success" href="add_category.php">Add Category <i class="fas fa-plus mx-2"></i></a>
             </div>
-            <div class="col-2 col-xl-2 col-sm-2 col-md-2 col-lg-2 ">
-                <a class="btn btn-success" href="assign_category.php">Assign Product <i class="fas fa-plus mx-2"></i></a>
-            </div>
+            
         </form>
         <?php
         require "../back_end/connect_db.php";
+
+        if(isset($_GET["action"]) && $_GET["action"] == "delete"){
+            $stmt = $conn->prepare("DELETE FROM Products_Categories WHERE category_id = :g");
+            $stmt->bindParam(":g", $_GET["id"]);
+           if($stmt->execute()) {
+                $stmt = $conn->prepare("DELETE FROM Categories WHERE id = :g");
+                $stmt->bindParam(":g", $_GET["id"]);
+                $stmt->execute();
+                echo ' <div class="alert alert-danger text-center mt-4" role="alert">
+                                Item removed !
+                        </div>';
+                header("location: admin_product.php");
+                }
+        }
 
         $stmt = $conn->prepare("SELECT * FROM Products_Categories");
         $stmt->execute();
@@ -50,12 +62,12 @@
                                     echo "<td>" . $valP["name"] . "</td>";
                                 }
                                 $_SESSION["delete_cat"] = $value["category_id"];
-                                echo "<td>
-                            <form action='../back_end/delete_assoc.php'>
-                            <button type='submit' class='btn btn-danger'>Delete</button></td>
-                            </form>";
-                                echo "</tr>";
-                            } ?>
+                               
+                            ?>
+                            <td>
+                             <span class="text-white"><a class="text-reset text-decoration-none btn btn-danger" href="admin_categories.php?action=delete&id=<?php echo $value["category_id"]; ?>">DELETE  <i class="fa fa-times"></i></a></span>
+                             </td>
+                            <?php } ?>
                         </table>
                     </div>
                 </div>

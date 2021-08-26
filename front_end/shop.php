@@ -7,32 +7,15 @@ require "../back_end/connect_db.php";
 <div class="container">
     <div class="mt-5 mb-5">
         <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 mb-5">
-                <div class="card text-white text-center" id="hero">
-                    <div class="card-header">
-                        Featured Products
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title text-uppercase">Our Hottest Products at the moment</h5>
-                        <img src="./img/t-shirt.png" class="img-fluid" alt="t-shirt"><br><br>
-                        <a href="#" class="btn btn-success">See the featured products</a>
-                    </div>
-                    <div class="card-footer text-white">
-                        See More Products That May Interest You
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 mb-5 mt-5 text-center">
-                <h1>-----Products-----</h1>
+                <h1>-----Browse Products-----</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
                     <?php
-                        $stmt = $conn->prepare("SELECT * FROM Products LIMIT 6 ;");
+                        $stmt = $conn->prepare("SELECT * FROM Products;");
                         $stmt->execute();
                         $prod = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                         foreach($prod as $key =>$prodList){
