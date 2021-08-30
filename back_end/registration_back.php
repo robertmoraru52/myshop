@@ -23,7 +23,7 @@ else{
                                 $stmt->bindParam(":em", $email, PDO::PARAM_STR);
                                 $stmt->bindParam(":psw", $psw_p, PDO::PARAM_STR);
                                 $stmt->execute();
-                                header("location: ../front_end/redirect_login.php");
+                                header("location: ../front_end/login.php");
                         }
                 }
         }

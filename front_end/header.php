@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php session_start(); 
+require "../back_end/connect_db.php";
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +20,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold active" aria-current="page" href="homepage.php">HOME</a> </li>
-                    <?php if($_SESSION['loggedin'] && $_SESSION["email"] == 'admin@example.com'){
+                    <?php 
+                    $stmt = $conn->prepare("SELECT * FROM Users WHERE email = :s");
+                    $stmt->bindParam(":s", $_SESSION["email"]);
+                    $stmt->execute();
+                    $user = $stmt->fetch();
+
+                    if($_SESSION['loggedin'] && $user["admin_f"] == 'true'){
                         echo '
                         <a class="nav-link pe-3 me-4 fw-bold" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                            <span class="ps-3">Admin Functions</span> <span class="fas fa-chevron-down"></span>
@@ -34,7 +42,7 @@
                             echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="shop.php">SHOP</a> </li>
                             <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="contact.php">CONTACT</a> </li>';
                         }
-                        if ($_SESSION['loggedin']) { 
+                        if ($_SESSION['loggedin'] ) { 
                                 echo '<li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="account.php">'.$_SESSION["email"] .'</a> </li>
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="../back_end/logout.php">LOGOUT</a> </li>';
                         }

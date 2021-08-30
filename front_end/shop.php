@@ -2,7 +2,6 @@
 require "header.php"; 
 require "../back_end/connect_db.php";
 ?>
-
 <!-- products start -->
 <div class="container">
     <div class="mt-5 mb-5">
@@ -21,7 +20,7 @@ require "../back_end/connect_db.php";
                         foreach($prod as $key =>$prodList){
                     ?>
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 text-center">
-                        <div class="card border-0 bg-dark mb-2">
+                        <div class="card border-0 bg-dark  mb-2 h-100">
                             <img src="./img/t-shirt.jpeg" class="img-fluid" alt="t-shirt">
                             <div class="card-body">
                                 <span style="color: white"><h5 class="card-title"><?php echo $prodList["name"]; ?></h5></span>

@@ -1,4 +1,7 @@
-<?php require "header.php"; ?>
+<?php require "header.php"; 
+    if($_SESSION['loggedin'] && $user["admin_f"] == 'true'){
+?>
+
 <div class="container my-5">
     <div class="row">
         <form action="../back_end/search_category.php" method="post" class="d-md-flex d-sm-block justify-content-between">
@@ -28,7 +31,7 @@
                 }
         }
 
-        $stmt = $conn->prepare("SELECT * FROM Products_Categories");
+        $stmt = $conn->prepare("SELECT * FROM Categories");
         $stmt->execute();
         $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         ?>
@@ -46,26 +49,34 @@
                             <?php
                             foreach ($rowList as $key => $value) {
                                 echo "<tr>";
-                                echo "<td>" . $value["category_id"] . "</td>";
-                                $stmt = $conn->prepare("SELECT * FROM Categories WHERE id = :p");
-                                $stmt->bindParam(":p", $value["category_id"]);
-                                $stmt->execute();
-                                $list_cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                                foreach ($list_cat as $key => $valC) {
-                                    echo "<td>" . $valC["name"] . "</td>";
-                                }
-                                $stmt = $conn->prepare("SELECT * FROM Products WHERE id = :i");
-                                $stmt->bindParam(":i", $value["product_id"]);
+                                echo "<td>" . $value["id"] . "</td>";
+                                echo "<td>" . $value["name"] . "</td>";
+                                ?>
+                                <td>
+                                <?php
+                                $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE category_id = :i");
+                                $stmt->bindParam(":i", $value["id"]);
                                 $stmt->execute();
                                 $list_prod = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                                 foreach ($list_prod as $key => $valP) {
-                                    echo "<td>" . $valP["name"] . "</td>";
+                                    $stmt = $conn->prepare("SELECT * FROM Products WHERE id = :i");
+                                    $stmt->bindParam(":i", $valP["product_id"]);
+                                    $stmt->execute();
+                                    $list_prod_name = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                    foreach ($list_prod_name as $key => $valP) {
+                                    echo "<p>" . $valP["name"] . "</p>";
+                                    }
                                 }
-                                $_SESSION["delete_cat"] = $value["category_id"];
-                               
                             ?>
+                            </td>
                             <td>
-                             <span class="text-white"><a class="text-reset text-decoration-none btn btn-danger" href="admin_categories.php?action=delete&id=<?php echo $value["category_id"]; ?>">DELETE  <i class="fa fa-times"></i></a></span>
+                                <div class="dropdown">
+                                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select Action</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li class="text-white"><a class="dropdown-item" href="admin_categories.php?action=delete&id=<?php echo $value["id"]; ?>">DELETE <i class="fa fa-times"></i></a></li>
+                                        <li class="text-white"><a class="dropdown-item" href="change_category.php?action=edit&id=<?php echo $value["id"]; ?>">EDIT <i class="fas fa-edit"></i></a></li>
+                                    </ul>
+                                </div>
                              </td>
                             <?php } ?>
                         </table>
@@ -75,4 +86,9 @@
         </div>
     </div>
 </div>
-<?php require "footer.php" ?>
+<?php 
+    }
+    else{
+        echo "error";
+    }
+require "footer.php" ?>

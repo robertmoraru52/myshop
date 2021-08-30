@@ -8,31 +8,28 @@ require "../back_end/connect_db.php";
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="text-right">User Info</h4>
+                    <h4 class="text-right">Category Info</h4>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <p class="text-right"><?php 
-                        $_SESSION["change_user_id"] = $_GET["id"];
-                        $stmt = $conn->prepare("SELECT * FROM Users WHERE id = :i");
+                        $_SESSION["change_category_id"] = $_GET["id"];
+                        $stmt = $conn->prepare("SELECT * FROM Categories WHERE id = :i");
                         $stmt->bindParam(":i", $_GET["id"]);
                         $stmt->execute();
-                        $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-                        echo $user["email"] . "</br>" . "Created At: " . $user["created_at"];
+                        $cat = $stmt->fetch(\PDO::FETCH_ASSOC);
+                        echo $cat["name"] . "</br>" . "Created At: ";
                     ?></p>
                 </div>
-                <form action="../back_end/change_user_back.php" method="POST"> 
+                <form action="../back_end/change_category_back.php" method="POST"> 
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <label class="labels">Email: </label>
-                            <input type="text" class="form-control" placeholder="change email" name="email">
+                            <label class="labels">Category Name: </label>
+                            <input type="text" class="form-control" placeholder="change category name" name="name">
                         </div>
                     </div>
                     <div class="row mt-5">
                         <div class="col-md-6">
                             <button class="btn btn-primary profile-button" type="submit" id="submit" name="submit">Save Changes</button>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="btn btn-success profile-button" type="submit" name="admin">Give Admin Function</button>
                         </div>
                     </div>
                 </form>

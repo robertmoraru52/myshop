@@ -1,11 +1,20 @@
 <?php require "header.php";
       require "../back_end/connect_db.php";
 ?>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container pb-5 mb-2 mt-5">
+    <?php 
+        $stmt = $conn->prepare("SELECT * FROM Cart WHERE user_email = :u");
+        $stmt->bindParam(":u", $_SESSION["email"]);
+        $stmt->execute();
+        if($stmt->rowCount()==0){
+            echo '<div class="alert alert-danger alert-dismissible fade show text-center mb-5"><span class="alert-close" data-dismiss="alert"></span>You have no items in your shopping cart !</div>';
+        }
+        else{
+         ?>
     <div class="alert alert-info alert-dismissible fade show text-center mb-5"><span class="alert-close" data-dismiss="alert"></span>These are the items in your shopping cart:</div>
 
     <?php
+    }
         $total = 0;
         if(isset($_GET["action"])){
             if($_GET["action"] == "delete"){

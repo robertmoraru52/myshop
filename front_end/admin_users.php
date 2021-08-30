@@ -1,4 +1,6 @@
-<?php require "header.php"; ?>
+<?php require "header.php"; 
+    if($_SESSION['loggedin'] && $user["admin_f"] == 'true'){
+        ?>
 <div class="container my-5">
     <div class="row">
         <form action="../back_end/search_user.php" method="post" class="d-md-flex d-sm-block justify-content-between">
@@ -38,7 +40,8 @@
                         <tr>
                             <th>User ID</th>
                             <th>Created At</th>
-                            <th>E-Mail</th>
+                            <th>Email</th>
+                            <th>Admin</th>
                             <th>Delete User</th>
                         </tr>
                         <?php
@@ -47,10 +50,17 @@
                             echo "<td>" . $value["id"] . "</td>";
                             echo "<td>" . $value["created_at"] . "</td>";
                             echo "<td>" . $value["email"] . "</td>";
+                            echo "<td>" . $value["admin_f"] . "</td>";
 
                         ?>
                         <td>
-                             <span class="text-white"><a class="text-reset text-decoration-none btn btn-danger" href="admin_users.php?action=delete&id=<?php echo $value["id"]; ?>">DELETE  <i class="fa fa-times"></i></a></span>
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select Action</button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li class="text-white"><a class="dropdown-item" href="admin_users.php?action=delete&id=<?php echo $value["id"]; ?>">DELETE <i class="fa fa-times"></i></a></li>
+                                    <li class="text-white"><a class="dropdown-item" href="change_user.php?action=edit&id=<?php echo $value["id"]; ?>">EDIT <i class="fas fa-edit"></i></a></li>
+                                </ul>
+                            </div>
                         </td>
                         <?php } ?>
                     </table>
@@ -59,4 +69,9 @@
         </div>
     </div>
 </div>
-<?php require "footer.php" ?>
+<?php 
+}
+else{
+    echo "error";
+}
+require "footer.php" ?>

@@ -33,9 +33,10 @@ $(document).ready(function(){
             $("#s_paragraph").fadeIn();
             $("#s_paragraph").html(data);
         });
+        $(document).on('click', 'li', function(){
+            $("#search_cat_navbar").val($(this).text())
+            $("#s_paragraph").fadeOut();
+        });
     });
-    $(document).on('click', 'li', function(){
-        $("#search_cat_navbar").val($(this).text())
-        $("#s_paragraph").fadeOut();
-    });
+    
 });
