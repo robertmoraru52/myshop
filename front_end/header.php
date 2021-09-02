@@ -54,7 +54,7 @@ require "../back_end/connect_db.php";
                 </ul>
                 <ul class="navbar-nav icons ms-auto mb-2 mb-lg-0">
                     <li class=" nav-item pe-3"> <a href="cart.php" class="fas fa-shopping-bag"> <span class="num rounded-circle"><?php echo $_SESSION["items_total"]; ?></span> </a> </li>
-                    <li class=" nav-item"> <span class="">items:</span> <span class="fw-bold"><?php echo $_SESSION["cart_total"]; ?></span> </li>
+                    <li class=" nav-item"> <span class="">items:</span> <span class="fw-bold"><?php echo $_SESSION["cart_total"]; ?> Lei</span> </li>
                 </ul>
             </div>
         </div>
@@ -83,7 +83,7 @@ require "../back_end/connect_db.php";
                     <div class="dropdown w-100 my-lg-0 my-2"> <button class="btn btn-secondary d-flex justify-content-between align-items-center" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="true"> <span class=" w-100 d-flex align-items-center"> 
                     </div>
                     <form action="../back_end/search_category_nav.php" method="POST" class="d-flex align-items-center w-100 h-100 ps-lg-0 ps-sm-3">
-                        <input name="search_cat" id="search_cat_navbar" class=" ps-md-0 ps-3" type="text" placeholder="search for a category" style="background-color: rgb(194, 194, 194);">
+                        <input name="search_cat" id="search_cat_navbar" class=" ps-md-0 ps-3" type="text" placeholder="search for a product" style="background-color: rgb(194, 194, 194);">
                         <button class="btn btn-primary d-flex align-items-center justify-content-center" type="submit" name="submit_search"><i class="fas fa-search"></i></button>
                     </form>
                 </div>

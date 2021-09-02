@@ -12,7 +12,6 @@
             <div class="col-2 col-xl-2 col-sm-2 col-md-2 col-lg-2 ">
                 <a class="btn btn-success" href="add_category.php">Add Category <i class="fas fa-plus mx-2"></i></a>
             </div>
-            
         </form>
         <?php
         require "../back_end/connect_db.php";

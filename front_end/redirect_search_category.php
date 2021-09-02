@@ -1,4 +1,7 @@
-<?php require "header.php"; ?>
+<?php require "header.php"; 
+    if($_SESSION['loggedin'] && $user["admin_f"] == 'true'){
+?>
+
 <div class="container my-5">
     <div class="row">
         <form action="../back_end/search_category.php" method="post" class="d-md-flex d-sm-block justify-content-between">
@@ -9,15 +12,26 @@
             <div class="col-2 col-xl-2 col-sm-2 col-md-2 col-lg-2 ">
                 <a class="btn btn-success" href="add_category.php">Add Category <i class="fas fa-plus mx-2"></i></a>
             </div>
-            <div class="col-2 col-xl-2 col-sm-2 col-md-2 col-lg-2 ">
-                <a class="btn btn-success" href="assign_category.php">Assign Product <i class="fas fa-plus mx-2"></i></a>
-            </div>
         </form>
         <?php
         require "../back_end/connect_db.php";
 
-        $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE category_id = :q");
-        $stmt->bindParam(":q", $_SESSION["cat_id"]);
+        if(isset($_GET["action"]) && $_GET["action"] == "delete"){
+            $stmt = $conn->prepare("DELETE FROM Products_Categories WHERE category_id = :g");
+            $stmt->bindParam(":g", $_GET["id"]);
+           if($stmt->execute()) {
+                $stmt = $conn->prepare("DELETE FROM Categories WHERE id = :g");
+                $stmt->bindParam(":g", $_GET["id"]);
+                $stmt->execute();
+                echo ' <div class="alert alert-danger text-center mt-4" role="alert">
+                                Item removed !
+                        </div>';
+                header("location: admin_product.php");
+                }
+        }
+
+        $stmt = $conn->prepare("SELECT * FROM Categories WHERE name = :n");
+        $stmt->bindParam(":n", $_SESSION["search_cat"]);
         $stmt->execute();
         $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         ?>
@@ -35,28 +49,36 @@
                             <?php
                             foreach ($rowList as $key => $value) {
                                 echo "<tr>";
-                                echo "<td>" . $value["category_id"] . "</td>";
-                                $stmt = $conn->prepare("SELECT * FROM Categories WHERE name = :p");
-                                $stmt->bindParam(":p", $_SESSION["search_cat"]);
-                                $stmt->execute();
-                                $list_cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-                                foreach ($list_cat as $key => $valC) {
-                                    echo "<td>" . $valC["name"] . "</td>";
-                                }
-                                $stmt = $conn->prepare("SELECT * FROM Products WHERE id = :i");
-                                $stmt->bindParam(":i", $value["product_id"]);
+                                echo "<td>" . $value["id"] . "</td>";
+                                echo "<td>" . $value["name"] . "</td>";
+                                ?>
+                                <td>
+                                <?php
+                                $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE category_id = :i");
+                                $stmt->bindParam(":i", $value["id"]);
                                 $stmt->execute();
                                 $list_prod = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                                 foreach ($list_prod as $key => $valP) {
-                                    echo "<td>" . $valP["name"] . "</td>";
+                                    $stmt = $conn->prepare("SELECT * FROM Products WHERE id = :i");
+                                    $stmt->bindParam(":i", $valP["product_id"]);
+                                    $stmt->execute();
+                                    $list_prod_name = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                    foreach ($list_prod_name as $key => $valP) {
+                                    echo "<p>" . $valP["name"] . "</p>";
+                                    }
                                 }
-                                $_SESSION["delete_cat"] = $value["category_id"];
-                                echo "<td>
-                            <form action='../back_end/delete_assoc.php'>
-                            <button type='submit' class='btn btn-danger'>Delete</button></td>
-                            </form>";
-                                echo "</tr>";
-                            } ?>
+                            ?>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select Action</button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li class="text-white"><a class="dropdown-item" href="admin_categories.php?action=delete&id=<?php echo $value["id"]; ?>">DELETE <i class="fa fa-times"></i></a></li>
+                                        <li class="text-white"><a class="dropdown-item" href="change_category.php?action=edit&id=<?php echo $value["id"]; ?>">EDIT <i class="fas fa-edit"></i></a></li>
+                                    </ul>
+                                </div>
+                             </td>
+                            <?php } ?>
                         </table>
                     </div>
                 </div>
@@ -64,4 +86,9 @@
         </div>
     </div>
 </div>
-<?php require "footer.php" ?>
+<?php 
+    }
+    else{
+        echo "error";
+    }
+require "footer.php" ?>
