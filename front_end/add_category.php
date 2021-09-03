@@ -1,4 +1,4 @@
-<?php require "header.php";?>
+<?php require "header.php"; ?>
 <form action="../back_end/category_back.php" method="post">
     <div class="container">
         <div class="row justify-content-center m-5">
@@ -23,4 +23,4 @@
         </div>
     </div>
 </form>
-<?php require "footer.php";?>
+<?php require "footer.php"; ?>

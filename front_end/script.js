@@ -41,16 +41,12 @@ $(document).ready(function(){
     
 });
 
-$( function() {
-    $( "#slider-range" ).slider({
-      range: true,
-      min: 0,
-      max: 500,
-      values: [ 75, 300 ],
-      slide: function( event, ui ) {
-        $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-      }
+/* star-rating */
+$('.modal-review__rating-order-wrap > span').click(function() {
+    $(this).addClass('active').siblings().removeClass('active');
+    $(this).parent().attr('data-rating-value', $(this).data('rating-value'));
+    let rating = $(this).data('rating-value');
+    $.post("../back_end/rating_back.php",{
+        star: rating
     });
-    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-      " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-  } );
+});

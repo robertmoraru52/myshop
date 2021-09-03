@@ -30,8 +30,6 @@
             header("location: admin_product.php");
         }
     }
-
-
     $stmt = $conn->prepare("SELECT * FROM Products WHERE name = :n");
     $stmt->bindParam(":n", $_SESSION["search_prod"]);
     $stmt->execute();
@@ -94,7 +92,6 @@
                                                 $stmt->execute();
                                             }
                                         }
-
                                         ?>
                                     </select>
                                 </div>
@@ -131,4 +128,4 @@
  else{
      echo "error";
  }
-require "footer.php" ?>
+require "footer.php"; ?>

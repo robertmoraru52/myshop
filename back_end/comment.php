@@ -7,9 +7,7 @@ if(isset($_POST["submit"])){
     $stmt->bindParam(":c", $_POST["comment"]);
     $stmt->bindParam(":u", $_SESSION["email"]);
     $stmt->execute();
-
     $last_id = $conn->lastInsertId();
-
     $stmt = $conn->prepare("INSERT INTO Products_Comments (product_id, comment_id) VALUES(:c, :u)");
     $stmt->bindParam(":c", $_SESSION["url_details"]);
     $stmt->bindParam(":u", $last_id);

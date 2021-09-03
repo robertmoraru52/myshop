@@ -12,7 +12,6 @@ $stmt->bindParam(":n", $name, PDO::PARAM_STR);
 $stmt->bindParam(":s", $stock, PDO::PARAM_STR);
 $stmt->bindParam(":p", $price, PDO::PARAM_STR);
 $stmt->bindParam(":d", $description, PDO::PARAM_STR);
-
 $stmt->execute();
                                                 
 header("location: ../front_end/admin_products.php");

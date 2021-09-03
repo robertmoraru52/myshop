@@ -27,7 +27,6 @@ if(ctype_xdigit($selector) !== false && ctype_xdigit($validator)){
                         <div class="d-grid">
                             <button type="submit" class="btn btn-success" name="submit" id="submit">Reset Password</button>
                         </div>
-                        
                     </div>
                 </div>
             </div>

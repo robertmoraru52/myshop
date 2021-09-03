@@ -11,16 +11,16 @@ require "../back_end/connect_db.php";
                     <h4 class="text-right">Category Info</h4>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="text-right"><?php 
-                        $_SESSION["change_category_id"] = $_GET["id"];
-                        $stmt = $conn->prepare("SELECT * FROM Categories WHERE id = :i");
-                        $stmt->bindParam(":i", $_GET["id"]);
-                        $stmt->execute();
-                        $cat = $stmt->fetch(\PDO::FETCH_ASSOC);
-                        echo $cat["name"] . "</br>" . "Created At: ";
-                    ?></p>
+                    <p class="text-right"><?php
+                                            $_SESSION["change_category_id"] = $_GET["id"];
+                                            $stmt = $conn->prepare("SELECT * FROM Categories WHERE id = :i");
+                                            $stmt->bindParam(":i", $_GET["id"]);
+                                            $stmt->execute();
+                                            $cat = $stmt->fetch(\PDO::FETCH_ASSOC);
+                                            echo $cat["name"] . "</br>" . "Created At: ";
+                                            ?></p>
                 </div>
-                <form action="../back_end/change_category_back.php" method="POST"> 
+                <form action="../back_end/change_category_back.php" method="POST">
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <label class="labels">Category Name: </label>
@@ -35,7 +35,7 @@ require "../back_end/connect_db.php";
                 </form>
             </div>
         </div>
-        </div>
     </div>
+</div>
 </div>
 <?php require "footer.php" ?>

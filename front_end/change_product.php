@@ -47,7 +47,7 @@ require "../back_end/connect_db.php";
                 </form>
             </div>
         </div>
-        </div>
     </div>
+</div>
 </div>
 <?php require "footer.php" ?>

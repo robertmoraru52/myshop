@@ -17,7 +17,6 @@
     <?php
     require "../back_end/connect_db.php";
 
-
     if(isset($_GET["action"]) && $_GET["action"] == "delete"){
             $stmt = $conn->prepare("DELETE FROM Users WHERE id = :g");
             $stmt->bindParam(":g", $_GET["id"]);
@@ -26,9 +25,6 @@
                             User removed !
                     </div>';
         }
-    
-
-
     $stmt = $conn->prepare("SELECT * FROM Users");
     $stmt->execute();
     $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC); ?>
@@ -51,7 +47,6 @@
                             echo "<td>" . $value["created_at"] . "</td>";
                             echo "<td>" . $value["email"] . "</td>";
                             echo "<td>" . $value["admin_f"] . "</td>";
-
                         ?>
                         <td>
                             <div class="dropdown">

@@ -1,7 +1,6 @@
 <?php require "header.php"; 
     if($_SESSION['loggedin'] && $user["admin_f"] == 'true'){
 ?>
-
 <div class="container my-5">
     <div class="row">
         <form action="../back_end/search_category.php" method="post" class="d-md-flex d-sm-block justify-content-between">
@@ -29,7 +28,6 @@
                 header("location: admin_product.php");
                 }
         }
-
         $stmt = $conn->prepare("SELECT * FROM Categories WHERE name = :n");
         $stmt->bindParam(":n", $_SESSION["search_cat"]);
         $stmt->execute();
@@ -91,4 +89,4 @@
     else{
         echo "error";
     }
-require "footer.php" ?>
+require "footer.php"; ?>

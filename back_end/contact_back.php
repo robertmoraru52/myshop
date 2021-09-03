@@ -1,7 +1,5 @@
 <?php
 require "connect_db.php";
-
-
 require "../send_mail/PHPMailer.php";
 require "../send_mail/Exception.php";
 require "../send_mail/SMTP.php";

@@ -30,6 +30,7 @@ require "../back_end/connect_db.php";
                             $stmt->execute();
                             $prod = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                             foreach ($prod as $key => $prodList) {
+                                $id = $prodList["id"];
                     ?>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xl-4 text-center">
                                     <div class="card border-0 bg-dark mb-2 h-100">
@@ -41,20 +42,28 @@ require "../back_end/connect_db.php";
                                             <span style="color: white">
                                                 <p class="card-text"><?php echo $prodList["description"]; ?></p>
                                             </span>
-                                            <div class="star mt-3 align-items-center text-white">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
+                                            <div class="modal-review__rating-order-wrap ms-5" onclick="location.href='<?php echo 'category_page.php?id='.$id ?>'">
+                                        <span data-rating-value="1"></span>
+                                        <span data-rating-value="2"></span>
+                                        <span data-rating-value="3"></span>
+                                        <span data-rating-value="4"></span>
+                                        <span data-rating-value="5"></span>
+                                    </div><br><br>
+                                    <p class="text-white" id="ratings"><?php 
+                                    $_SESSION["prod_id_rating"] = $_GET["id"];
+                                    
+                                    $stmt = $conn->prepare("SELECT AVG(stars) FROM Rating WHERE id_product = :i");
+                                    $stmt->bindParam(":i", $prodList["id"]);
+                                    $stmt->execute();
+                                    $round = $stmt->fetch();
+                                    echo "Product Rating: " . round($round[0]); ;
+                                    ?></p>
                                             <span style="color: rgb(240, 43, 48);">
                                                 <h6><?php echo $prodList["price"]; ?></h6>
                                             </span>
                                             <?php
                                             echo "<a href='details.php?product_id=" . $prodList["id"] . "'" . "class='btn btn-success'>See More Details</a>";
                                             ?>
-
                                         </div>
                                     </div>
                                 </div>

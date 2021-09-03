@@ -14,7 +14,6 @@ if(isset($_POST["submit"])){
     header("location: ../front_end/admin_users.php");
 }
 
-
 if(isset($_POST["admin"])){
     $stmt = $conn->prepare("UPDATE Users SET admin_f = 'true' WHERE id = :i");
     $stmt->bindParam(":i", $id);

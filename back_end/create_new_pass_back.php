@@ -32,7 +32,6 @@ if(isset($_POST["submit"])){
     }
     elseif($tokenCheck === true){
         $tokenEmail = $row["email"];
-
         $stmt = $conn->prepare("SELECT * FROM Users WHERE email = :em");
         $stmt->bindParam(":em", $tokenEmail);
         $stmt->execute();

@@ -17,7 +17,6 @@
     <?php
     require "../back_end/connect_db.php";
 
-
     if(isset($_GET["action"]) && $_GET["action"] == "delete"){
             $stmt = $conn->prepare("DELETE FROM Users WHERE id = :g");
             $stmt->bindParam(":g", $_GET["id"]);
@@ -26,9 +25,6 @@
                             User removed !
                     </div>';
         }
-    
-
-
     $stmt = $conn->prepare("SELECT * FROM Users WHERE email = :e");
     $stmt->bindParam(":e", $_SESSION["search_user"]);
     $stmt->execute();
@@ -52,7 +48,6 @@
                             echo "<td>" . $value["created_at"] . "</td>";
                             echo "<td>" . $value["email"] . "</td>";
                             echo "<td>" . $value["admin_f"] . "</td>";
-
                         ?>
                         <td>
                             <div class="dropdown">
@@ -75,4 +70,4 @@
 else{
     echo "error";
 }
-require "footer.php" ?>
+require "footer.php"; ?>

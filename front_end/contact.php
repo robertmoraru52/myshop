@@ -1,5 +1,4 @@
 <?php require "header.php" ?>
-
 <div class="container contact my-5">
     <div class="row">
         <div class="col-md-9">
@@ -55,5 +54,4 @@
         </div>
     </div>
 </div>
-
 <?php require "footer.php" ?>

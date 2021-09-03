@@ -3,7 +3,7 @@ session_start();
 require "header.php";
 require "../back_end/connect_db.php";
 $stmt = $conn->prepare("SELECT * FROM Users WHERE email = :em");
-$stmt->bindParam("em",$_SESSION["email"]);
+$stmt->bindParam("em", $_SESSION["email"]);
 $stmt->execute();
 $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 ?>
@@ -71,17 +71,17 @@ $row = $stmt->fetch(\PDO::FETCH_ASSOC);
                     <div class="col-md-12 mt-4"><button type="submit" class="btn btn-primary">Save New Password</button></div>
                 </form>
                 <?php
-                        $fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                $fullUrl = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-                        if (strpos($fullUrl, "error=userorpsw") == true) {
-                            echo ' <div class="alert alert-danger mt-4" role="alert">
+                if (strpos($fullUrl, "error=userorpsw") == true) {
+                    echo ' <div class="alert alert-danger mt-4" role="alert">
                                     The password is invalid!
                                   </div>';
-                        } else if (strpos($fullUrl, "error=error") == true) {
-                            echo ' <div class="alert alert-danger mt-4" role="alert">
+                } else if (strpos($fullUrl, "error=error") == true) {
+                    echo ' <div class="alert alert-danger mt-4" role="alert">
                                     There was an error! Please try again!
                                   </div>';
-                        }
+                }
                 ?>
             </div>
         </div>

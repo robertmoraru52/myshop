@@ -8,9 +8,7 @@ $prod = $stmt->fetch(\PDO::FETCH_ASSOC);
 $_SESSION["product_cart_price"] = $prod["price"];
 $_SESSION["product_cart_name"] = $prod["name"];
 $_SESSION["product_cart_id"] = $prod["id"];
-
 ?>
-
 <span id="mini-header"><h1><?php echo $prod["name"]; ?></h1></span>
 <div class="container">
     <div class="row">
@@ -53,9 +51,7 @@ $_SESSION["product_cart_id"] = $prod["id"];
                                         <li><p>".$showComm["user"]." : ". $showComm["comments"] ."</p></li>
                                     </ul>";
                             }
-                        
                         ?>
-                        
                         <p class="card-text"></p>
                     </span>
                 </div>
