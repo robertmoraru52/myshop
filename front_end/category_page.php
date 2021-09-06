@@ -6,7 +6,7 @@ require "../back_end/connect_db.php";
     <div class="mt-5 mb-5">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 mb-5 mt-5 text-center">
-                <h1>-----<?php echo $_SESSION["cat_header"]; ?>-----</h1>
+                <h1><?php echo $_SESSION["cat_header"]; ?></h1>
             </div>
         </div>
         <div class="row">

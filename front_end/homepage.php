@@ -24,7 +24,7 @@ require "../back_end/connect_db.php";
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 mb-5 mt-5 text-center">
-                <h1>-----Products-----</h1>
+                <h1>Products</h1>
             </div>
         </div>
         <div class="row">

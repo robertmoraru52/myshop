@@ -25,7 +25,7 @@ require "../back_end/connect_db.php";
                 </div>
             </div>
             <div class="col-md-9 text-center">
-                <h1 class="mb-5">-----Browse Products-----</h1>
+                <h1 class="mb-5">Browse Products</h1>
                 <div class="card text-white text-center" id="hero">
                     <div class="card-header">
                         Featured Products

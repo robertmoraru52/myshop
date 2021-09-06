@@ -63,13 +63,18 @@
                                         $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id=:p");
                                         $stmt->bindParam(":p", $value["id"]);
                                         $stmt->execute();
-                                        $cattt = $stmt->fetch();
-                                        $stmt = $conn->prepare("SELECT * FROM Categories WHERE id=:p");
-                                        $stmt->bindParam(":p", $cattt["category_id"]);
-                                        $stmt->execute();
-                                        $cat_name_selected = $stmt->fetch();
-                                        echo "<option selected>" . $cat_name_selected["name"] . "</option>";
-
+                                        $cattt = $stmt->fetchAll();
+                                        foreach($cattt as $key => $categ){
+                                            $stmt = $conn->prepare("SELECT * FROM Categories WHERE id=:p");
+                                            $stmt->bindParam(":p", $categ["category_id"]);
+                                            $stmt->execute();
+                                            $cat_name_selected = $stmt->fetchAll();
+                                            foreach($cat_name_selected as $key => $cat_name){
+                                            echo "<option selected>" . $cat_name["name"] . "</option>";
+                                            }
+    
+                                        }
+                                       
                                         $stmt = $conn->prepare("SELECT * FROM Categories");
                                         $stmt->execute();
                                         $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -77,8 +82,9 @@
                                             echo "<option value='admin_products.php?prod_id=" . $value["id"] . "'>" . $category["name"] . "</option>";
                                         }
                                         
-                                        $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id=:p");
+                                        $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id=:p AND category_id=:c");
                                         $stmt->bindParam(":p", $_GET["prod_id"]);
+                                        $stmt->bindParam(":c", $_SESSION["category_id"]);
                                         $stmt->execute();
                                         if (isset($_SESSION["category_id"]) && isset($_GET["prod_id"])) {
                                             if ($stmt->rowCount() == 0) {
@@ -86,12 +92,13 @@
                                                 $stmt->bindParam(":cat_name", $_SESSION["category_id"]);
                                                 $stmt->bindParam(":prod_id", $_GET["prod_id"]);
                                                 $stmt->execute();
-                                            } else {
-                                                $stmt = $conn->prepare("UPDATE Products_Categories SET category_id = :cat_name WHERE product_id = :prod_id");
+                                            } else if ($stmt->rowCount() == 1){
+                                                $stmt = $conn->prepare("DELETE FROM Products_Categories WHERE category_id = :cat_name AND product_id = :prod_id");
                                                 $stmt->bindParam(":cat_name", $_SESSION["category_id"]);
                                                 $stmt->bindParam(":prod_id", $_GET["prod_id"]);
                                                 $stmt->execute();
                                             }
+
                                         }
                                         ?>
                                     </select>
@@ -116,14 +123,14 @@
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     window.onload = function() {
         if (!window.location.hash) {
             window.location = window.location + '#loaded';
             window.location.reload();
         }
     }
-</script>
+</script> -->
 <?php 
  }
  else{

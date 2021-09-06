@@ -9,7 +9,7 @@ $prod = $stmt->fetch(\PDO::FETCH_ASSOC);
 $_SESSION["product_cart_price"] = $prod["price"];
 $_SESSION["product_cart_name"] = $prod["name"];
 ?>
-<span id="mini-header">
+<span id="mini-header" class="my-5">
     <h1><?php echo $prod["name"]; ?></h1>
 </span>
 <div class="container">
