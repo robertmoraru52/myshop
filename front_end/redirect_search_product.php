@@ -57,40 +57,48 @@
                         ?>
                             <td>
                                 <div class='form-group'>
-                                    <select multiple class='form-control-sm text-white bg-dark' id="select-cat" onChange="window.location.href=this.value;getComboA(this)">
+                                <select multiple class='form-control-sm text-white bg-dark' id="select-cat" onChange="getComboA(this)">
                                         <?php
                                         $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id=:p");
                                         $stmt->bindParam(":p", $value["id"]);
                                         $stmt->execute();
-                                        $cattt = $stmt->fetch();
-                                        $stmt = $conn->prepare("SELECT * FROM Categories WHERE id=:p");
-                                        $stmt->bindParam(":p", $cattt["category_id"]);
-                                        $stmt->execute();
-                                        $cat_name_selected = $stmt->fetch();
-                                        echo "<option selected>" . $cat_name_selected["name"] . "</option>";
-
+                                        $prod = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                        foreach($prod as $prodP){
+                                            $stmt = $conn->prepare("SELECT * FROM Categories WHERE id=:p");
+                                            $stmt->bindParam(":p", $prodP["category_id"]);
+                                            $stmt->execute();
+                                            $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                                            foreach($cat as $catExistent){
+                                                echo "<option selected>" . $catExistent["name"] . "</option>";;
+                                            }     
+                                        }
+                                       
                                         $stmt = $conn->prepare("SELECT * FROM Categories");
                                         $stmt->execute();
                                         $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                                         foreach ($cat as $key => $category) {
-                                            echo "<option value='admin_products.php?prod_id=" . $value["id"] . "'>" . $category["name"] . "</option>";
+                                            echo "<option value='" . $value["id"] . "'>" . $category["name"] . "</option>";
                                         }
                                         
-                                        $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id=:p");
-                                        $stmt->bindParam(":p", $_GET["prod_id"]);
+                                        $stmt = $conn->prepare("SELECT * FROM Products_Categories WHERE product_id=:p AND category_id=:c");
+                                        $stmt->bindParam(":p", $_SESSION["id_prod_select"]);
+                                        $stmt->bindParam(":c", $_SESSION["category_id"]);
                                         $stmt->execute();
-                                        if (isset($_SESSION["category_id"]) && isset($_GET["prod_id"])) {
+                                        if (isset($_SESSION["category_id"]) && isset($_SESSION["id_prod_select"])) {
                                             if ($stmt->rowCount() == 0) {
                                                 $stmt = $conn->prepare("INSERT INTO Products_Categories (category_id,product_id) VALUES (:cat_name, :prod_id)");
                                                 $stmt->bindParam(":cat_name", $_SESSION["category_id"]);
-                                                $stmt->bindParam(":prod_id", $_GET["prod_id"]);
+                                                $stmt->bindParam(":prod_id", $_SESSION["id_prod_select"]);
                                                 $stmt->execute();
-                                            } else {
-                                                $stmt = $conn->prepare("UPDATE Products_Categories SET category_id = :cat_name WHERE product_id = :prod_id");
+                                            } else if ($stmt->rowCount() == 1){
+                                                $stmt = $conn->prepare("DELETE FROM Products_Categories WHERE category_id = :cat_name AND product_id = :prod_id");
                                                 $stmt->bindParam(":cat_name", $_SESSION["category_id"]);
-                                                $stmt->bindParam(":prod_id", $_GET["prod_id"]);
+                                                $stmt->bindParam(":prod_id", $_SESSION["id_prod_select"]);
                                                 $stmt->execute();
                                             }
+                                            unset($_SESSION["category_id"]);
+                                            unset($_SESSION["id_prod_select"]);
+
                                         }
                                         ?>
                                     </select>

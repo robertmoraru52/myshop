@@ -1,17 +1,22 @@
 
 function getComboA(sel) {
-    let value = sel.options[sel.selectedIndex].text;
-    console.log(value);
+    let name = sel.options[sel.selectedIndex].text;
+    let value = sel.options[sel.selectedIndex].value;
+
     $.post("../back_end/update_cat.php",{
-            category: value
+            category: name,
+            prod_id: value
         });
 };
 
 function getComboCart(sel) {
     let value = sel.options[sel.selectedIndex].text;
+    let id = sel.options[sel.selectedIndex].value;    
     console.log(value);
-    $.post("../back_end/cart_back.php",{
-            quantity: value
+    console.log(id);
+    $.post("cart.php",{
+            quantity: value,
+            id: id
         });
 };
 
@@ -42,11 +47,16 @@ $(document).ready(function(){
 });
 
 /* star-rating */
+
 $('.modal-review__rating-order-wrap > span').click(function() {
     $(this).addClass('active').siblings().removeClass('active');
     $(this).parent().attr('data-rating-value', $(this).data('rating-value'));
     let rating = $(this).data('rating-value');
+    var val = this.getAttribute('data-value');
+    console.log($(this).data('rating-value'));
     $.post("../back_end/rating_back.php",{
-        star: rating
+        star: rating,
+        id: val
     });
 });
+

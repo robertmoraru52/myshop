@@ -1,12 +1,10 @@
 <?php
 session_start();
 require "connect_db.php";
-$_SESSION["cat"]=$_POST["category"];
 $stmt = $conn->prepare("SELECT * FROM Categories WHERE name = :namecat");
-$stmt->bindParam(":namecat", $_SESSION["cat"]);
+$stmt->bindParam(":namecat", $_POST["category"]);
 $stmt->execute();
-$catId = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-foreach($catId as $key => $catt){
-    $_SESSION["category_id"] = $catt["id"];
+$catId = $stmt->fetch(\PDO::FETCH_ASSOC);
+$_SESSION["category_id"] = $catId["id"];
+$_SESSION["id_prod_select"] = $_POST["prod_id"];
 
-}

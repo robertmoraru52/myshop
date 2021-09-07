@@ -24,24 +24,29 @@ $_SESSION["product_cart_name"] = $prod["name"];
                     <span style="color: white" class="card-text">
                         <p><?php echo $prod["description"]; ?></p>
                     </span>
-                    <div class="modal-review__rating-order-wrap ms-5">
-                        <span data-rating-value="1"></span>
-                        <span data-rating-value="2"></span>
-                        <span data-rating-value="3"></span>
-                        <span data-rating-value="4"></span>
-                        <span data-rating-value="5"></span>
-                    </div><br><br>
-                    <p class="text-white" id="ratings">
-                        <?php
-                        $_SESSION["prod_id_rating"] = $prod["id"];
-
-                        $stmt = $conn->prepare("SELECT AVG(stars) FROM Rating WHERE id_product = :i");
-                        $stmt->bindParam(":i", $prod["id"]);
-                        $stmt->execute();
-                        $round = $stmt->fetch();
-                        echo "Product Rating: " . round($round[0]);;
-                        ?>
-                    </p>
+                    <div class="modal-review__rating-order-wrap ms-5" >
+                                        <span data-rating-value="1"  data-value="<?php echo $prod["id"]; ?>"></span>
+                                        <span data-rating-value="2"  data-value="<?php echo $prod["id"]; ?>"></span>
+                                        <span data-rating-value="3"  data-value="<?php echo $prod["id"]; ?>"></span>
+                                        <span data-rating-value="4"  data-value="<?php echo $prod["id"]; ?>"></span>
+                                        <span data-rating-value="5"  data-value="<?php echo $prod["id"]; ?>"></span>
+                                    </div>
+                                    <br><br>
+                                    <p class="text-white">Votes:<?php
+                                    $stmt = $conn->prepare("SELECT * FROM Rating WHERE id_product = :i");
+                                    $stmt->bindParam(":i", $prod["id"]);
+                                    $stmt->execute();
+                                    printf($stmt->rowCount()) ;
+                                    ?></p>
+                                    <br><br>
+                                    <p class="text-white" id="ratings"><?php
+                                        $stmt = $conn->prepare("SELECT AVG(stars) FROM Rating WHERE id_product = :i");
+                                        $stmt->bindParam(":i", $prod["id"]);
+                                        $stmt->execute();
+                                        $round = $stmt->fetch();
+                                        echo "Product Rating: " . round($round[0]);
+                                        ?>
+                                    </p>
                     <span style="color: rgb(240, 43, 48);">
                         <h6><?php echo $prod["price"]; ?> Lei</h6>
                     </span>
@@ -79,6 +84,8 @@ $_SESSION["product_cart_name"] = $prod["name"];
             </div>
             <div class="mt-4">
                 <form action="../back_end/cart_back.php" method="POST">
+                    <input type="number" class="w-25" name="quantity" value="1" min="1" max="<?php echo $prod['stock'] ?>" placeholder="Quantity" required><br><br>
+                    <input type="hidden" name="product_id" value="<?php $prod['id']?>">
                     <button type="submit" name="add-to-cart" class="btn btn-success">Add to cart <i class="fas fa-shopping-cart"></i></button>
                 </form>
                 <?php

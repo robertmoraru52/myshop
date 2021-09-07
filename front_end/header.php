@@ -33,6 +33,7 @@ require "../back_end/connect_db.php";
                         </a>
                         <div class="collapse" id="collapseExample">
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_users.php">Users</a> </li>
+                                <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_rating.php">Ratings</a> </li>
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_products.php">Products</a> </li>
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_categories.php">Categories</a> </li>
                         </div>'
@@ -53,8 +54,14 @@ require "../back_end/connect_db.php";
                     ?>
                 </ul>
                 <ul class="navbar-nav icons ms-auto mb-2 mb-lg-0">
-                    <li class=" nav-item pe-3"> <a href="cart.php" class="fas fa-shopping-bag"> <span class="num rounded-circle"><?php echo $_SESSION["items_total"]; ?></span> </a> </li>
+                    <li class=" nav-item pe-3"> <a href="cart.php" class="fas fa-shopping-bag"> 
+                        <?php if(!empty($_SESSION["cart"])){ ?>
+                            <span class="num rounded-circle"><?php echo $_SESSION["items_total"]; ?></span>
+                        <?php } ?>
+                         </a> </li>
                     <li class=" nav-item"> <span class="">items:</span> <span class="fw-bold"><?php echo $_SESSION["cart_total"]; ?> Lei</span> </li>
+                    <li class=" nav-item ms-2 pe-3"> <a href="order.php" class="fas fa-shipping-fast"> 
+                    </a> </li>
                 </ul>
             </div>
         </div>
