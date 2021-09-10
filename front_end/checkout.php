@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" />  
   </head>
   <body>
-  <div class="container my-container ">
+  <div class="container-fluid my-container ">
     <div class="card bg-white px-5">
         <div class="card-header">
             <div class="jumbotron mb-1 bg-white ">
@@ -24,7 +24,7 @@
         <div class="card-body">
             <div class="row ">
                 <!-- Left Half -->
-                <div class="col-md-5 ">
+                <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5 ">
                     <div class="card mt-2 border-0 second-card">
                         <!-- Form -->
                         <div class="card-body">

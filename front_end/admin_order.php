@@ -15,15 +15,14 @@
     require "../back_end/connect_db.php";
 
     if(isset($_GET["action"]) && $_GET["action"] == "delete"){
-            $stmt = $conn->prepare("DELETE FROM Rating WHERE id_product = :g AND user_email = :e");
-            $stmt->bindParam(":g", $_GET["id"]);
+            $stmt = $conn->prepare("DELETE FROM Orders WHERE user_email = :e");
             $stmt->bindParam(":e", $_GET["email"]);
             $stmt->execute();
             echo ' <div class="alert alert-danger text-center mt-4" role="alert">
-                            Rating removed !
+                            Order removed !
                     </div>';
         }
-    $stmt = $conn->prepare("SELECT * FROM Rating");
+    $stmt = $conn->prepare("SELECT * FROM Orders");
     $stmt->execute();
     $rowList = $stmt->fetchAll(\PDO::FETCH_ASSOC); ?>
     <div class='container mt-5'>
@@ -32,29 +31,27 @@
                 <div class='table-responsive'>
                     <table class='table table-hover table-inverse table-dark'>
                         <tr>
-                            <th>Product</th>
-                            <th>Rated At</th>
-                            <th>Rating</th>
+                            <th>Product List(And Quantity)</th>
+                            <th>Ordered At At</th>
                             <th>User Email</th>
-                            <th>Delete Rating</th>
+                            <th>Delete Order</th>
                         </tr>
                         <?php
                         foreach ($rowList as $key => $value) {
                             $stmt = $conn->prepare("SELECT * FROM Products WHERE id = :s");
-                            $stmt->bindParam(":s",$value['id_product']);
+                            $stmt->bindParam(":s",$value['product_id']);
                             $stmt->execute();
                             $prodname = $stmt->fetch();
                             echo "<tr>";
-                            echo "<td>" . $prodname["name"] . "</td>";
-                            echo "<td>" . $value["rated_at"] . "</td>";
-                            echo "<td>" . $value["stars"] . "</td>";
+                            echo "<td>" . $prodname["name"] ."(". $value["product_q"].")"."</td>";
+                            echo "<td>" . $value["orderd_at"] . "</td>";
                             echo "<td>" . $value["user_email"] . "</td>";
                         ?>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Select Action</button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li class="text-white"><a class="dropdown-item" href="admin_rating.php?action=delete&id=<?php echo $value["id_product"]."&email=". $value["user_email"]; ?>">DELETE <i class="fa fa-times"></i></a></li>
+                                    <li class="text-white"><a class="dropdown-item" href="admin_order.php?action=delete&<?php echo "email=". $value["user_email"]; ?>">DELETE <i class="fa fa-times"></i></a></li>
                                 </ul>
                             </div>
                         </td>

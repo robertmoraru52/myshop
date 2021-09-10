@@ -36,6 +36,7 @@ require "../back_end/connect_db.php";
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_rating.php">Ratings</a> </li>
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_products.php">Products</a> </li>
                                 <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_categories.php">Categories</a> </li>
+                                <li class="nav-item"> <a class="nav-link pe-3 me-4 fw-bold" href="admin_order.php">Orders</a> </li>
                         </div>'
                         ;
                     }
@@ -70,7 +71,7 @@ require "../back_end/connect_db.php";
         <div class="col-lg-3 mb-lg-0 mb-2">
             <p> <a class="btn btn-primary w-100 d-flex align-items-center justify-content-between" data-bs-toggle="collapse" href="#collapse2" role="button" aria-expanded="false" aria-controls="Toggle Navigation"> <span class="fas fa-bars"><span class="ps-3">All Categories</span></span> <span class="fas fa-chevron-down"></span> </a> </p>
             <div class="collapse" id="collapse2">
-                <ul class="list-unstyled ms-3" id="cat_nav" onclick="refreshPage()" >
+                <ul class="list-unstyled ms-3" id="cat_nav">
                     <?php
                     require "../back_end/connect_db.php";
 

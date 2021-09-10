@@ -32,9 +32,24 @@ require "../back_end/connect_db.php";
             <div class="col-lg-12">
                 <div class="row">
                     <?php
-                    $stmt = $conn->prepare("SELECT * FROM Products LIMIT 6 ;");
+                     if (isset($_GET['pageno'])) {
+                        $pageno = $_GET['pageno'];
+                    } else {
+                        $pageno = 1;
+                    }
+                    $no_of_records_per_page = 6;
+                    $offset = ($pageno-1) * $no_of_records_per_page;
+                    $total_pages_sql = "SELECT COUNT(*) FROM Products";
+                    $stmt = $conn->prepare($total_pages_sql);
                     $stmt->execute();
-                    $prod = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                    $result = $stmt->fetch();
+                    $total_rows = $result[0];
+                    $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+                    $sql = "SELECT * FROM Products LIMIT $offset, $no_of_records_per_page";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $prod = $stmt->fetchAll();
                     foreach ($prod as $key => $prodList) {
                         $id = $prodList["id"];
                     ?>
@@ -72,7 +87,7 @@ require "../back_end/connect_db.php";
                                         ?>
                                     </p>
                                     <span style="color: rgb(240, 43, 48);">
-                                        <h6><?php echo $prodList["price"]; ?></h6>
+                                        <h6><?php echo $prodList["price"]; ?> Lei</h6>
                                     </span>
                                     <?php
                                     echo "<a href='details.php?product_id=" . $prodList["id"] . "'" . "class='btn btn-success'>See More Details</a>";
@@ -81,10 +96,26 @@ require "../back_end/connect_db.php";
                             </div>
                         </div>
                     <?php } ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center  mt-3 ">
+                                    <li class="page-item"><a class="page-link bg-dark text-white" href="?pageno=1">First</a></li>
+                                    <li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>"><a class="page-link bg-dark text-white" href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Previous</a></li>
+                                    <li class="page-item"><a class="page-link bg-dark text-white" href="#"><?php echo $pageno; ?></a></li>
+                                    <li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>"><a class="page-link bg-dark text-white" href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Next</a></li>
+                                    <li class="page-item"><a class="page-link bg-dark text-white" href="?pageno=<?php echo $total_pages; ?>">Last</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+   
+            
+       
 </div>
 <!-- products end -->
 <?php require "footer.php"; ?>

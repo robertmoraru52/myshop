@@ -67,13 +67,21 @@ $_SESSION["product_cart_id"] = $prod["id"];
                                         <li><p>".$showComm["user"]." : ". $showComm["comments"] ."</p></li>
                                     </ul>";
                             }
+                            
                         ?>
                         <p class="card-text"></p>
                     </span>
                 </div>
             </div>   
+            <?php if($prod["stock"] == 0){
+                echo '<div class="alert alert-danger mt-4" role="alert">
+                We have no more of this product in our stock!
+                </div>';
+            }
+            else{ ?>
             <div class="mt-4">
                 <form action="../back_end/cart_back_search.php" method="POST">
+                    <input type="number" class="w-25" name="quantity" value="1" min="1" max="<?php echo $prod['stock'] ?>" placeholder="Quantity" required><br><br>
                     <button type="submit" name="add-to-cart" class="btn btn-success">Add to cart <i class="fas fa-shopping-cart"></i></button>
                 </form>
                 <?php
@@ -89,6 +97,7 @@ $_SESSION["product_cart_id"] = $prod["id"];
                     }
                 ?>
             </div> 
+            <?php } ?>
     </div>
     <div class="row">
         <div class="col-lg-12 text-center mt-4">

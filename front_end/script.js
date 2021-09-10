@@ -12,21 +12,17 @@ function getComboA(sel) {
 function getComboCart(sel) {
     let value = sel.options[sel.selectedIndex].text;
     let id = sel.options[sel.selectedIndex].value;    
-    console.log(value);
-    console.log(id);
     $.post("cart.php",{
             quantity: value,
             id: id
-        });
+        });    
 };
 
 $("#cat_nav li").click(function() {
     let name = $(this).text(); 
-    console.log(name);
     $.post("../back_end/cat_header_back.php",{
         cat: name
     });
-    
 });
 
 $(document).ready(function(){
@@ -47,16 +43,13 @@ $(document).ready(function(){
 });
 
 /* star-rating */
-
 $('.modal-review__rating-order-wrap > span').click(function() {
     $(this).addClass('active').siblings().removeClass('active');
     $(this).parent().attr('data-rating-value', $(this).data('rating-value'));
     let rating = $(this).data('rating-value');
     var val = this.getAttribute('data-value');
-    console.log($(this).data('rating-value'));
     $.post("../back_end/rating_back.php",{
         star: rating,
         id: val
     });
 });
-

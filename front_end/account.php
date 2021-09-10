@@ -82,6 +82,11 @@ $row = $stmt->fetch(\PDO::FETCH_ASSOC);
                                     There was an error! Please try again!
                                   </div>';
                 }
+                else if (strpos($fullUrl, "success=success") == true) {
+                    echo ' <div class="alert alert-success mt-4" role="alert">
+                                    You changed the password successfuly !
+                                  </div>';
+                }
                 ?>
             </div>
         </div>

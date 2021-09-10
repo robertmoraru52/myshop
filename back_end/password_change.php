@@ -18,7 +18,7 @@ if($psw == $confirm_new && $psw!=$old_psw){
                     $hashed_password = $row["password"];
                     if(password_verify($old_psw, $hashed_password)){
                         $stmt = $conn->prepare("UPDATE Users SET password='$pswHashed' WHERE email='$emailSession';")->execute();
-                        echo "suucces";
+                        header("location: ../front_end/account.php?success=success");
                     } else{
                         header("location: ../front_end/account.php?error=userorpsw");
                     }

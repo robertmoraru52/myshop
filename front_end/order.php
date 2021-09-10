@@ -3,16 +3,17 @@ require "../back_end/connect_db.php";
 ?>
 <div class="container pb-5 mb-2 mt-5">
     <?php
-    if (!$_SESSION["cart"]) {
-        echo '<div class="alert alert-danger alert-dismissible fade show text-center mb-5"><span class="alert-close" data-dismiss="alert"></span>You have no items in your shopping cart !</div>';
+     $stmt = $conn->prepare("SELECT * FROM Orders WHERE user_email = :i");
+     $stmt->bindParam(":i",$_SESSION["email"]);
+     $stmt->execute();
+    if ($stmt->rowCount() == 0) {
+        echo '<div class="alert alert-danger alert-dismissible fade show text-center mb-5"><span class="alert-close" data-dismiss="alert"></span>You did not order any items !</div>';
     } else {
     ?>
         <div class="alert alert-info alert-dismissible fade show text-center mb-5"><span class="alert-close" data-dismiss="alert"></span>These are the items in your order:</div>
     <?php
     }    
-        $stmt = $conn->prepare("SELECT * FROM Orders WHERE user_email = :i");
-        $stmt->bindParam(":i",$_SESSION["email"]);
-        $stmt->execute();
+       
         $prod = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         foreach($prod as $value){
     ?>

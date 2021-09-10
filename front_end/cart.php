@@ -16,7 +16,7 @@ require "../back_end/connect_db.php";
             header("location: cart.php");
             echo ' <div class="alert alert-danger text-center mt-4" role="alert">
                                     Item removed from shopping cart!
-                            </div>';
+                    </div>';
         
     }
     $q = array_keys($_SESSION['cart']);
@@ -84,4 +84,4 @@ require "../back_end/connect_db.php";
         <div class="col-sm-6 mb-3 text-center"><a class="btn btn-style-1 btn-primary btn-block" href="checkout.php"><i class="fe-icon-credit-card"></i>Checkout</a></div>
     </div>
 </div>
-<?php require "footer.php" ?>
+<?php require "footer.php"; ?>
