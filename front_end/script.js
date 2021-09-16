@@ -2,11 +2,10 @@
 function getComboA(sel) {
     let name = sel.options[sel.selectedIndex].text;
     let value = sel.options[sel.selectedIndex].value;
-
     $.post("../back_end/update_cat.php",{
             category: name,
             prod_id: value
-        });
+        },setTimeout(location.reload.bind(location), 100));
 };
 
 function getComboCart(sel) {
@@ -14,8 +13,9 @@ function getComboCart(sel) {
     let id = sel.options[sel.selectedIndex].value;    
     $.post("cart.php",{
             quantity: value,
-            id: id
-        });    
+            id: id,
+            test: '1234'
+        },setTimeout(location.reload.bind(location), 100));
 };
 
 $("#cat_nav li").click(function() {

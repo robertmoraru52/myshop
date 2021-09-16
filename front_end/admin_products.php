@@ -70,7 +70,7 @@
                                             $stmt->execute();
                                             $cat = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                                             foreach($cat as $catExistent){
-                                                echo "<option selected>" . $catExistent["name"] . "</option>";;
+                                                echo "<option selected value='" . $value["id"] . "'>" . $catExistent["name"] . "</option>";
                                             }     
                                         }
                                        

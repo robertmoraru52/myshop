@@ -40,7 +40,7 @@ require "../back_end/connect_db.php";
             <div class="px-3 my-3 text-center">
                 <div class="cart-item-label">Quantity</div>
                 <div class="count-input">
-                    <select class="form-control" id="quantity-cart" onChange="getComboCart(this)">
+                    <select class="form-control" data-id="<?php echo $_SESSION["cart_total"]*$_SESSION["cart"][$_POST["id"]]; ?>" id="quantity-cart" onChange="getComboCart(this);">
                         <?php 
                         for($i = 1;$i<=$value["stock"];$i++){
                             echo  "<option value='".$value["id"]. "'>".$i."</option>";
@@ -53,7 +53,8 @@ require "../back_end/connect_db.php";
             <div class="px-3 my-3 text-center">
                 <div class="cart-item-label">Price</div><span class="text-xl font-weight-medium">
                     <?php
-                    echo $value["price"] . " Lei "; ?>
+                        echo $value["price"] . " Lei "; 
+                    ?>
                 </span>
             </div>
         </div>
