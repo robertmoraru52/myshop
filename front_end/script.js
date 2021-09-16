@@ -48,6 +48,7 @@ $('.modal-review__rating-order-wrap > span').click(function() {
     $(this).parent().attr('data-rating-value', $(this).data('rating-value'));
     let rating = $(this).data('rating-value');
     var val = this.getAttribute('data-value');
+    console.log(rating);
     $.post("../back_end/rating_back.php",{
         star: rating,
         id: val
